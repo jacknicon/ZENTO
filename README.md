@@ -76,7 +76,9 @@ npm run build
 
 ## 📄 ライセンス
 
-[MIT License](https://github.com/jacknicon/ZENTO/blob/main/LICENSE) のもとで公開されています。商用利用・改変・再配布が可能です。
+本サービスのソースコードは [MIT License](https://github.com/jacknicon/ZENTO/blob/main/LICENSE) のもとで公開されています。
+
+※ 本サービスの利用およびデータ利用に関しては、下記の [利用規約](#-利用規約)（商業目的での無断利用の禁止等）が適用されます。
 
 ---
 
