@@ -197,10 +197,10 @@ export const Header: React.FC<HeaderProps> = ({
         <button
           onClick={onOpenPresetModal}
           className="btn-zento btn-secondary"
-          title="大学公式推奨履修モデルを選択・一括反映"
+          title="履修モデルコースを選択・一括反映"
         >
           <Sparkles size={16} color="#10b981" />
-          <span>推奨モデル</span>
+          <span>履修モデル</span>
         </button>
 
         <button onClick={handleExportCSV} className="btn-zento btn-secondary" title="CSVダウンロード">
@@ -295,8 +295,8 @@ export const Header: React.FC<HeaderProps> = ({
               >
                 <Sparkles size={18} color="#10b981" />
                 <div className="menu-text">
-                  <span className="title">推奨履修モデル</span>
-                  <span className="desc">大学公式モデルを1クリック反映</span>
+                  <span className="title">履修モデルコース</span>
+                  <span className="desc">分野別モデル計画を1クリック反映</span>
                 </div>
               </button>
 

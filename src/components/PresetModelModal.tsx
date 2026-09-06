@@ -83,8 +83,10 @@ export const PresetModelModal: React.FC<PresetModelModalProps> = ({
 
   if (!isOpen) return null;
 
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
   const handleSelectModel = (model: PresetModel) => {
-    const confirmMsg = `「${model.name}」推奨履修モデルをタイムラインに適用しますか？\n\n※現在配置中の科目は上書きされ、モデルの全 ${model.totalCoursesCount} 科目（${model.totalCredits}単位・4年次「プロジェクト実践」含む）が年次計画に自動配置されます。`;
+    const confirmMsg = `「${model.name}」履修モデルをタイムラインに適用しますか？\n\n※現在配置中の科目は上書きされ、モデルの全 ${model.totalCoursesCount} 科目（${model.totalCredits}単位・4年次卒業プロジェクト含む）が年次計画に自動配置されます。`;
     if (window.confirm(confirmMsg)) {
       const planItems = convertPresetToPlanItems(model.courses);
       onApplyModel(model, planItems);
@@ -102,9 +104,9 @@ export const PresetModelModal: React.FC<PresetModelModalProps> = ({
       <div
         className="zento-modal-content"
         style={{
-          width: '94%',
+          width: isMobile ? '98%' : '94%',
           maxWidth: '1000px',
-          maxHeight: '90vh',
+          maxHeight: isMobile ? '95vh' : '90vh',
           display: 'flex',
           flexDirection: 'column',
           padding: '0',
@@ -119,7 +121,7 @@ export const PresetModelModal: React.FC<PresetModelModalProps> = ({
         {/* Header */}
         <div
           style={{
-            padding: '20px 24px',
+            padding: isMobile ? '12px 16px' : '18px 24px',
             background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
             borderBottom: '1px solid #334155',
             display: 'flex',
@@ -127,67 +129,69 @@ export const PresetModelModal: React.FC<PresetModelModalProps> = ({
             justifyContent: 'space-between',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <div
               style={{
-                width: '42px',
-                height: '42px',
+                width: isMobile ? '36px' : '42px',
+                height: isMobile ? '36px' : '42px',
                 borderRadius: '10px',
                 background: 'linear-gradient(135deg, #059669 0%, #10b981 100%)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
+                flexShrink: 0,
                 boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)',
               }}
             >
-              <Sparkles size={22} color="#ffffff" />
+              <Sparkles size={isMobile ? 18 : 22} color="#ffffff" />
             </div>
             <div>
               <h2
                 style={{
-                  fontSize: '1.25rem',
-                  fontWeight: 700,
+                  fontSize: isMobile ? '1rem' : '1.2rem',
+                  fontWeight: 800,
                   color: '#ffffff',
                   margin: 0,
                   display: 'flex',
                   alignItems: 'center',
-                  gap: '8px',
+                  gap: '6px',
                 }}
               >
-                大学推奨 履修モデルコース（全11コース）
+                履修モデルコース (全11コース)
               </h2>
-              <p style={{ fontSize: '0.83rem', color: '#94a3b8', margin: '3px 0 0 0' }}>
-                専攻したい分野や興味に合わせた履修パターンを選択して、一括でタイムライン（4年次卒業プロジェクト含む）に反映できます。
+              <p style={{ fontSize: isMobile ? '0.74rem' : '0.82rem', color: '#94a3b8', margin: '2px 0 0 0' }}>
+                興味や将来の進路に合わせた履修モデルを選び、1クリックで計画に反映できます。
               </p>
             </div>
           </div>
           <button
             onClick={onClose}
             style={{
-              background: 'transparent',
-              border: 'none',
+              background: '#1e293b',
+              border: '1px solid #334155',
               color: '#94a3b8',
               cursor: 'pointer',
               padding: '6px',
-              borderRadius: '6px',
+              borderRadius: '50%',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
+              flexShrink: 0,
             }}
           >
-            <X size={22} />
+            <X size={18} />
           </button>
         </div>
 
         {/* Content Body */}
         <div
           style={{
-            padding: '20px 24px',
+            padding: isMobile ? '12px' : '20px 24px',
             overflowY: 'auto',
             flex: 1,
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(440px, 1fr))',
-            gap: '16px',
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fill, minmax(380px, 1fr))',
+            gap: '12px',
             background: '#090d16',
           }}
         >
@@ -202,20 +206,19 @@ export const PresetModelModal: React.FC<PresetModelModalProps> = ({
                   background: '#1e293b',
                   border: isExpanded ? '1px solid #10b981' : '1px solid #334155',
                   borderRadius: '12px',
-                  padding: '16px',
+                  padding: isMobile ? '12px' : '16px',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '12px',
+                  gap: '10px',
                   transition: 'all 0.2s ease',
-                  position: 'relative',
                 }}
               >
                 {/* Top info */}
-                <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start' }}>
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'flex-start' }}>
                   <div
                     style={{
-                      width: '46px',
-                      height: '46px',
+                      width: '40px',
+                      height: '40px',
                       borderRadius: '10px',
                       background: model.gradient,
                       display: 'flex',
@@ -225,70 +228,71 @@ export const PresetModelModal: React.FC<PresetModelModalProps> = ({
                       boxShadow: '0 4px 10px rgba(0,0,0,0.3)',
                     }}
                   >
-                    <IconComponent size={24} color="#ffffff" />
+                    <IconComponent size={20} color="#ffffff" />
                   </div>
 
-                  <div style={{ flex: 1 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
-                      <h3
-                        style={{
-                          fontSize: '1.05rem',
-                          fontWeight: 700,
-                          color: '#ffffff',
-                          margin: 0,
-                        }}
-                      >
-                        {model.name}
-                      </h3>
-                    </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <h3
+                      style={{
+                        fontSize: '1rem',
+                        fontWeight: 800,
+                        color: '#ffffff',
+                        margin: 0,
+                        lineHeight: 1.3,
+                      }}
+                    >
+                      {model.name}
+                    </h3>
 
-                    <p style={{ fontSize: '0.8rem', color: '#cbd5e1', margin: '4px 0 8px 0', lineHeight: '1.35' }}>
+                    <p style={{ fontSize: '0.78rem', color: '#cbd5e1', margin: '3px 0 6px 0', lineHeight: '1.35' }}>
                       {model.tagline}
                     </p>
 
-                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                    <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
                       <span
                         style={{
-                          fontSize: '0.72rem',
+                          fontSize: '0.68rem',
                           background: 'rgba(56, 189, 248, 0.15)',
                           color: '#38bdf8',
-                          padding: '2px 8px',
-                          borderRadius: '12px',
+                          padding: '2px 7px',
+                          borderRadius: '10px',
                           border: '1px solid rgba(56, 189, 248, 0.3)',
-                          display: 'flex',
+                          display: 'inline-flex',
                           alignItems: 'center',
-                          gap: '4px',
+                          gap: '3px',
                         }}
                       >
-                        <Layers size={12} /> 1・2年次履修モデル
+                        <Layers size={11} /> 1・2年次履修モデル
                       </span>
                       <span
                         style={{
-                          fontSize: '0.72rem',
+                          fontSize: '0.68rem',
                           background: 'rgba(16, 185, 129, 0.15)',
                           color: '#34d399',
-                          padding: '2px 8px',
-                          borderRadius: '12px',
+                          padding: '2px 7px',
+                          borderRadius: '10px',
                           border: '1px solid rgba(16, 185, 129, 0.3)',
-                          display: 'flex',
+                          display: 'inline-flex',
                           alignItems: 'center',
-                          gap: '4px',
+                          gap: '3px',
                         }}
                       >
-                        <Award size={12} /> {model.totalCoursesCount} 科目 ({model.totalCredits} 単位)
+                        <Award size={11} /> {model.totalCoursesCount} 科目 ({model.totalCredits} 単位)
                       </span>
                     </div>
                   </div>
                 </div>
 
-                {/* Actions */}
+                {/* Actions Bar */}
                 <div
                   style={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'space-between',
-                    marginTop: '4px',
-                    paddingTop: '10px',
+                    flexWrap: 'wrap',
+                    gap: '8px',
+                    marginTop: '2px',
+                    paddingTop: '8px',
                     borderTop: '1px solid #334155',
                   }}
                 >
@@ -298,7 +302,7 @@ export const PresetModelModal: React.FC<PresetModelModalProps> = ({
                       background: 'transparent',
                       border: 'none',
                       color: '#94a3b8',
-                      fontSize: '0.78rem',
+                      fontSize: '0.75rem',
                       cursor: 'pointer',
                       display: 'flex',
                       alignItems: 'center',
@@ -308,11 +312,11 @@ export const PresetModelModal: React.FC<PresetModelModalProps> = ({
                   >
                     {isExpanded ? (
                       <>
-                        <ChevronUp size={16} /> 科目一覧を閉じる
+                        <ChevronUp size={15} /> 閉じる
                       </>
                     ) : (
                       <>
-                        <ChevronDown size={16} /> 履修科目内訳 ({model.courses.length}件) を表示
+                        <ChevronDown size={15} /> 科目内訳 ({model.courses.length}件)
                       </>
                     )}
                   </button>
@@ -324,21 +328,20 @@ export const PresetModelModal: React.FC<PresetModelModalProps> = ({
                       color: '#ffffff',
                       border: 'none',
                       borderRadius: '8px',
-                      padding: '6px 14px',
-                      fontSize: '0.82rem',
-                      fontWeight: 600,
+                      padding: '6px 12px',
+                      fontSize: '0.8rem',
+                      fontWeight: 700,
                       cursor: 'pointer',
-                      display: 'flex',
+                      display: 'inline-flex',
                       alignItems: 'center',
-                      gap: '6px',
+                      justifyContent: 'center',
+                      gap: '5px',
                       boxShadow: '0 2px 8px rgba(16, 185, 129, 0.25)',
-                      transition: 'transform 0.1s ease',
+                      flex: isMobile ? '1 1 100%' : 'none',
                     }}
-                    onMouseDown={(e) => (e.currentTarget.style.transform = 'scale(0.97)')}
-                    onMouseUp={(e) => (e.currentTarget.style.transform = 'scale(1)')}
                   >
-                    <Check size={15} />
-                    <span>このモデルを適用</span>
+                    <Check size={14} />
+                    <span>このモデルを反映</span>
                   </button>
                 </div>
 
@@ -346,12 +349,12 @@ export const PresetModelModal: React.FC<PresetModelModalProps> = ({
                 {isExpanded && (
                   <div
                     style={{
-                      marginTop: '8px',
+                      marginTop: '6px',
                       background: '#0f172a',
                       borderRadius: '8px',
-                      padding: '10px 12px',
+                      padding: '8px',
                       border: '1px solid #334155',
-                      maxHeight: '260px',
+                      maxHeight: '220px',
                       overflowY: 'auto',
                     }}
                   >
@@ -359,29 +362,25 @@ export const PresetModelModal: React.FC<PresetModelModalProps> = ({
                       style={{
                         width: '100%',
                         borderCollapse: 'collapse',
-                        fontSize: '0.75rem',
+                        fontSize: '0.72rem',
                         color: '#cbd5e1',
                       }}
                     >
                       <thead>
                         <tr style={{ borderBottom: '1px solid #334155', color: '#94a3b8', textAlign: 'left' }}>
-                          <th style={{ padding: '4px 6px' }}>年次</th>
-                          <th style={{ padding: '4px 6px' }}>学期</th>
-                          <th style={{ padding: '4px 6px' }}>科目名</th>
-                          <th style={{ padding: '4px 6px' }}>単位</th>
-                          <th style={{ padding: '4px 6px' }}>区分</th>
-                          <th style={{ padding: '4px 6px' }}>備考</th>
+                          <th style={{ padding: '3px 4px' }}>年</th>
+                          <th style={{ padding: '3px 4px' }}>Q</th>
+                          <th style={{ padding: '3px 4px' }}>科目名</th>
+                          <th style={{ padding: '3px 4px' }}>単位</th>
                         </tr>
                       </thead>
                       <tbody>
                         {model.courses.map((c, i) => (
                           <tr key={i} style={{ borderBottom: '1px solid #1e293b' }}>
-                            <td style={{ padding: '4px 6px', color: '#f8fafc', fontWeight: 600 }}>{c.year}年</td>
-                            <td style={{ padding: '4px 6px', color: '#38bdf8' }}>{c.quarterStr}</td>
-                            <td style={{ padding: '4px 6px', color: '#ffffff', fontWeight: 500 }}>{c.subjectRaw}</td>
-                            <td style={{ padding: '4px 6px' }}>{c.credits}</td>
-                            <td style={{ padding: '4px 6px', color: '#a7f3d0' }}>{c.category}</td>
-                            <td style={{ padding: '4px 6px', color: '#fcd34d' }}>{c.notes}</td>
+                            <td style={{ padding: '3px 4px', color: '#f8fafc', fontWeight: 600 }}>{c.year}年</td>
+                            <td style={{ padding: '3px 4px', color: '#38bdf8' }}>{c.quarterStr}</td>
+                            <td style={{ padding: '3px 4px', color: '#ffffff', fontWeight: 500 }}>{c.subjectRaw}</td>
+                            <td style={{ padding: '3px 4px' }}>{c.credits}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -396,7 +395,7 @@ export const PresetModelModal: React.FC<PresetModelModalProps> = ({
         {/* Footer */}
         <div
           style={{
-            padding: '14px 24px',
+            padding: isMobile ? '10px 16px' : '14px 24px',
             background: '#1e293b',
             borderTop: '1px solid #334155',
             display: 'flex',
@@ -404,8 +403,8 @@ export const PresetModelModal: React.FC<PresetModelModalProps> = ({
             justifyContent: 'space-between',
           }}
         >
-          <span style={{ fontSize: '0.78rem', color: '#94a3b8' }}>
-            ※ モデル適用後も、タイムライン上で自由に追加・移動・削除・成績管理が可能です。
+          <span style={{ fontSize: '0.74rem', color: '#94a3b8' }}>
+            ※ モデル適用後もタイムラインで自由に変更可能です。
           </span>
           <button
             onClick={onClose}
@@ -414,8 +413,8 @@ export const PresetModelModal: React.FC<PresetModelModalProps> = ({
               color: '#ffffff',
               border: 'none',
               borderRadius: '6px',
-              padding: '6px 16px',
-              fontSize: '0.82rem',
+              padding: '6px 14px',
+              fontSize: '0.8rem',
               fontWeight: 600,
               cursor: 'pointer',
             }}
