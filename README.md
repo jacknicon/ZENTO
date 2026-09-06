@@ -39,6 +39,8 @@
 - **Icon Set**: Lucide React
 - **Deployment**: Vercel
 
+- **AI Code Assistance**: Google Antigravity (Gemini)
+
 ---
 
 ## 🚀 ローカルでの開発・起動手順
@@ -66,9 +68,10 @@ npm run build
 
 ## 🙏 謝意 / 参考 (Credits)
 
-本アプリケーションの開発にあたり、先行して公開されている以下の素晴らしいオープンソースプロジェクトおよびデータを参考にさせていただきました。開発者様に心より感謝申し上げます。
+本アプリケーションの開発にあたり、AIコードアシスタントおよび先行して公開されているオープンソースプロジェクトを参考に活用させていただきました。心より感謝申し上げます。
 
-- [ZEN大学 履修計画プランナー by sifue](https://github.com/sifue/zen-course-planner) (MIT License)
+- **AI Pair Programming**: [Google Antigravity](https://deepmind.google/) (Gemini Powered)
+- **先駆的プロジェクト**: [ZEN大学 履修計画プランナー by sifue](https://github.com/sifue/zen-course-planner) (MIT License)
 
 ---
 
