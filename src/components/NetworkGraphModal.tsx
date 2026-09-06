@@ -56,10 +56,10 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
 
   const layoutOptions = [
     { label: 'Cose (力学モデル)', value: 'cose' },
-    { label: 'Breadthfirst (階層構造)', value: 'breadthfirst' },
-    { label: 'Circle (円状配置)', value: 'circle' },
-    { label: 'Concentric (同心円状)', value: 'concentric' },
-    { label: 'Grid (格子配置)', value: 'grid' },
+    { label: 'Breadthfirst (階層)', value: 'breadthfirst' },
+    { label: 'Circle (円状)', value: 'circle' },
+    { label: 'Concentric (同心円)', value: 'concentric' },
+    { label: 'Grid (格子)', value: 'grid' },
   ];
 
   const plannedNames = useMemo(() => new Set(plan.map((p) => p.subjectName)), [plan]);
@@ -76,7 +76,6 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
     lockedTargetIdRef.current = null;
     setHoveredInfo(null);
 
-    // 1. Determine active node names based on displayMode
     let targetCourseNames = new Set<string>();
 
     if (displayMode === 'all') {
@@ -88,7 +87,6 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
         }
       });
     } else {
-      // 'default': Planned courses + their prerequisites & successors
       plannedNames.forEach((name) => targetCourseNames.add(name));
 
       courses.forEach((c) => {
@@ -96,7 +94,6 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
         let isRelated = isPlanned;
 
         if (!isRelated) {
-          // Check if c is prerequisite or successor of any planned course
           const prereqs = [...(c.前提必須科目 || []), ...(c.前提推奨科目 || [])];
           if (prereqs.some((p) => plannedNames.has(p))) {
             isRelated = true;
@@ -106,7 +103,6 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
             isRelated = true;
           }
 
-          // Check if any planned course has c as prerequisite or successor
           if (!isRelated) {
             courses.forEach((other) => {
               if (plannedNames.has(other.科目名)) {
@@ -124,7 +120,6 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
       });
     }
 
-    // 2. Filter targetCourseNames by selectedDomain if not 'all'
     if (selectedDomain !== 'all') {
       const filtered = new Set<string>();
       targetCourseNames.forEach((name) => {
@@ -139,7 +134,6 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
       targetCourseNames = filtered;
     }
 
-    // 3. Build Cytoscape elements
     const elements: cytoscape.ElementDefinition[] = [];
     const addedNodes = new Set<string>();
 
@@ -158,11 +152,9 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
       }
     });
 
-    // 4. Build edges
     courses.forEach((c) => {
       if (!addedNodes.has(c.科目名)) return;
 
-      // 前提必須科目
       (c.前提必須科目 || []).forEach((reqRaw) => {
         if (!reqRaw || reqRaw === 'なし') return;
         const reqList = reqRaw.includes('、') ? reqRaw.split('、') : reqRaw.includes(',') ? reqRaw.split(',') : [reqRaw];
@@ -181,7 +173,6 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
         });
       });
 
-      // 前提推奨科目
       (c.前提推奨科目 || []).forEach((reqRaw) => {
         if (!reqRaw || reqRaw === 'なし') return;
         const reqList = reqRaw.includes('、') ? reqRaw.split('、') : reqRaw.includes(',') ? reqRaw.split(',') : [reqRaw];
@@ -200,7 +191,6 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
         });
       });
 
-      // 後継推奨科目
       (c.後継推奨科目 || []).forEach((succRaw) => {
         if (!succRaw || succRaw === 'なし') return;
         const succList = succRaw.includes('、') ? succRaw.split('、') : succRaw.includes(',') ? succRaw.split(',') : [succRaw];
@@ -220,7 +210,6 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
       });
     });
 
-    // Manual edges
     manualEdges.forEach((mEdge, idx) => {
       if (addedNodes.has(mEdge.source) && addedNodes.has(mEdge.target)) {
         elements.push({
@@ -234,7 +223,6 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
       }
     });
 
-    // 5. Initialize Cytoscape
     const cy = cytoscape({
       container: containerRef.current,
       elements,
@@ -352,7 +340,7 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
         animate: false,
         refresh: 20,
         fit: true,
-        padding: 50,
+        padding: window.innerWidth < 768 ? 20 : 50,
         nodeOverlap: 20,
         componentSpacing: 80,
         nodeRepulsion: () => 400000,
@@ -371,7 +359,7 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
 
       setHoveredInfo({
         title: node.data('label'),
-        subText: `接続科目数: ${node.degree()}件 ${isLocked ? '📌 [固定中]' : '(クリックで固定)'}`,
+        subText: `接続科目数: ${node.degree()}件 ${isLocked ? '📌 [固定中]' : '(タップで固定)'}`,
         isLocked,
       });
     };
@@ -387,7 +375,7 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
 
       setHoveredInfo({
         title: `【${sourceNode.data('label')}】 ➔ 【${targetNode.data('label')}】`,
-        subText: `関連接続 ${isLocked ? '📌 [固定中]' : '(クリックで固定)'}`,
+        subText: `関連接続 ${isLocked ? '📌 [固定中]' : '(タップで固定)'}`,
         isLocked,
       });
     };
@@ -468,10 +456,10 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
       style={{
         position: 'fixed',
         inset: 0,
-        background: 'rgba(15, 23, 42, 0.7)',
+        background: 'rgba(15, 23, 42, 0.8)',
         backdropFilter: 'blur(5px)',
         zIndex: 110,
-        padding: '20px',
+        padding: window.innerWidth < 768 ? '8px' : '20px',
       }}
       onClick={onClose}
     >
@@ -480,8 +468,8 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
         className="flex-col"
         style={{
           width: '1180px',
-          maxWidth: '96vw',
-          height: '88vh',
+          maxWidth: '100%',
+          height: window.innerWidth < 768 ? '96vh' : '88vh',
           background: '#ffffff',
           borderRadius: '16px',
           boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
@@ -489,25 +477,40 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
         }}
       >
         <div
-          className="flex-between"
           style={{
-            padding: '14px 20px',
+            padding: window.innerWidth < 768 ? '8px 12px' : '12px 20px',
             borderBottom: '1px solid #e2e8f0',
             background: '#0f172a',
             color: '#ffffff',
           }}
         >
-          <div>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '8px', margin: 0 }}>
-              <Layers size={18} color="#818cf8" />
-              ネットワーク関係図 (全科目・力学/構造表示)
+          <div className="flex-between" style={{ marginBottom: window.innerWidth < 768 ? '6px' : '8px' }}>
+            <h3 style={{ fontSize: window.innerWidth < 768 ? '0.9rem' : '1.1rem', fontWeight: 800, display: 'flex', alignItems: 'center', gap: '6px', margin: 0 }}>
+              <Layers size={16} color="#818cf8" />
+              履修系統図 (全279科目)
             </h3>
-            <span style={{ fontSize: '0.74rem', color: '#94a3b8' }}>
-              ノードやエッジをホバー/クリックでハイライト固定表示。表示モードで「全科目」を選択すると大学の全279科目が表示されます。
-            </span>
+
+            <button
+              onClick={onClose}
+              style={{
+                border: 'none',
+                background: '#334155',
+                color: '#ffffff',
+                borderRadius: '50%',
+                width: '28px',
+                height: '28px',
+                cursor: 'pointer',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <X size={16} />
+            </button>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+          {/* Controls Bar */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
             <select
               value={displayMode}
               onChange={(e) => setDisplayMode(e.target.value as any)}
@@ -516,9 +519,10 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
                 color: '#ffffff',
                 border: '1px solid #334155',
                 borderRadius: '6px',
-                padding: '4px 8px',
-                fontSize: '0.76rem',
+                padding: '3px 6px',
+                fontSize: '0.72rem',
                 fontWeight: 700,
+                flex: window.innerWidth < 768 ? '1 1 auto' : 'none',
               }}
             >
               {displayModeOptions.map((opt) => (
@@ -536,9 +540,10 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
                 color: '#ffffff',
                 border: '1px solid #334155',
                 borderRadius: '6px',
-                padding: '4px 8px',
-                fontSize: '0.76rem',
+                padding: '3px 6px',
+                fontSize: '0.72rem',
                 fontWeight: 600,
+                flex: window.innerWidth < 768 ? '1 1 auto' : 'none',
               }}
             >
               {domainOptions.map((opt) => (
@@ -556,9 +561,10 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
                 color: '#ffffff',
                 border: '1px solid #334155',
                 borderRadius: '6px',
-                padding: '4px 8px',
-                fontSize: '0.76rem',
+                padding: '3px 6px',
+                fontSize: '0.72rem',
                 fontWeight: 600,
+                flex: window.innerWidth < 768 ? '1 1 auto' : 'none',
               }}
             >
               {layoutOptions.map((opt) => (
@@ -568,49 +574,32 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
               ))}
             </select>
 
-            <button
-              onClick={() => cyRef.current?.zoom(cyRef.current.zoom() * 1.2)}
-              className="btn-zento btn-secondary"
-              style={{ padding: '5px 8px' }}
-              title="拡大"
-            >
-              <ZoomIn size={15} />
-            </button>
-            <button
-              onClick={() => cyRef.current?.zoom(cyRef.current.zoom() / 1.2)}
-              className="btn-zento btn-secondary"
-              style={{ padding: '5px 8px' }}
-              title="縮小"
-            >
-              <ZoomOut size={15} />
-            </button>
-            <button
-              onClick={() => cyRef.current?.fit()}
-              className="btn-zento btn-secondary"
-              style={{ padding: '5px 8px' }}
-              title="全ノードに合わせる"
-            >
-              <RefreshCw size={15} />
-            </button>
-
-            <button
-              onClick={onClose}
-              style={{
-                border: 'none',
-                background: '#334155',
-                color: '#ffffff',
-                borderRadius: '50%',
-                width: '30px',
-                height: '30px',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                marginLeft: '4px',
-              }}
-            >
-              <X size={16} />
-            </button>
+            <div style={{ display: 'flex', gap: '4px', marginLeft: 'auto' }}>
+              <button
+                onClick={() => cyRef.current?.zoom(cyRef.current.zoom() * 1.2)}
+                className="btn-zento btn-secondary"
+                style={{ padding: '4px 6px' }}
+                title="拡大"
+              >
+                <ZoomIn size={14} />
+              </button>
+              <button
+                onClick={() => cyRef.current?.zoom(cyRef.current.zoom() / 1.2)}
+                className="btn-zento btn-secondary"
+                style={{ padding: '4px 6px' }}
+                title="縮小"
+              >
+                <ZoomOut size={14} />
+              </button>
+              <button
+                onClick={() => cyRef.current?.fit()}
+                className="btn-zento btn-secondary"
+                style={{ padding: '4px 6px' }}
+                title="全体に合わせる"
+              >
+                <RefreshCw size={14} />
+              </button>
+            </div>
           </div>
         </div>
 
@@ -618,8 +607,8 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
           <div
             style={{
               background: hoveredInfo.isLocked ? '#e0e7ff' : '#f1f5f9',
-              padding: '6px 20px',
-              fontSize: '0.76rem',
+              padding: '4px 12px',
+              fontSize: '0.72rem',
               fontWeight: 700,
               color: hoveredInfo.isLocked ? '#3730a3' : '#475569',
               borderBottom: '1px solid #cbd5e1',
@@ -628,7 +617,9 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
               justifyContent: 'space-between',
             }}
           >
-            <span>🎯 選択中: {hoveredInfo.title} ({hoveredInfo.subText})</span>
+            <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              🎯 {hoveredInfo.title} ({hoveredInfo.subText})
+            </span>
             {hoveredInfo.isLocked && (
               <button
                 onClick={() => {
@@ -642,13 +633,15 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
                   background: '#ffffff',
                   color: '#4338ca',
                   borderRadius: '12px',
-                  padding: '1px 8px',
-                  fontSize: '0.7rem',
+                  padding: '1px 6px',
+                  fontSize: '0.66rem',
                   cursor: 'pointer',
                   fontWeight: 700,
+                  flexShrink: 0,
+                  marginLeft: '6px',
                 }}
               >
-                🔓 固定解除
+                🔓 解除
               </button>
             )}
           </div>
@@ -659,4 +652,3 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
     </div>
   );
 };
-

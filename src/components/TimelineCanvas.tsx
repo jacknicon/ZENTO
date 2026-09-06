@@ -31,7 +31,9 @@ export const TimelineCanvas: React.FC<TimelineCanvasProps> = ({
   onDropCourseToSlot,
 }) => {
   const [dragOverCell, setDragOverCell] = useState<{ year: Year; quarter: Quarter } | null>(null);
-  const [selectedMobileYear, setSelectedMobileYear] = useState<Year | 'all'>('all');
+  const [selectedMobileYear, setSelectedMobileYear] = useState<Year | 'all'>(
+    typeof window !== 'undefined' && window.innerWidth < 768 ? 1 : 'all'
+  );
 
   const years: Year[] = [1, 2, 3, 4];
   const quarters: Quarter[] = enrollmentTerm === 'spring' ? ['1Q', '2Q', '3Q', '4Q'] : ['3Q', '4Q', '1Q', '2Q'];
@@ -91,23 +93,23 @@ export const TimelineCanvas: React.FC<TimelineCanvasProps> = ({
         style={{
           background: '#ffffff',
           borderBottom: '1px solid #e2e8f0',
-          padding: '8px 14px',
-          fontSize: '0.8rem',
+          padding: '6px 12px',
+          fontSize: '0.78rem',
           flexWrap: 'wrap',
-          gap: '8px',
+          gap: '6px',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span style={{ fontWeight: 700, color: '#334155', fontSize: '0.76rem' }}>入学時期:</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+            <span style={{ fontWeight: 700, color: '#334155', fontSize: '0.72rem' }}>入学:</span>
             <div style={{ display: 'flex', background: '#f1f5f9', borderRadius: '9999px', padding: '2px' }}>
               <button
                 onClick={() => setEnrollmentTerm('spring')}
                 style={{
                   border: 'none',
-                  padding: '3px 10px',
+                  padding: '2px 8px',
                   borderRadius: '9999px',
-                  fontSize: '0.74rem',
+                  fontSize: '0.7rem',
                   fontWeight: 600,
                   cursor: 'pointer',
                   background: enrollmentTerm === 'spring' ? '#4f46e5' : 'transparent',
@@ -120,9 +122,9 @@ export const TimelineCanvas: React.FC<TimelineCanvasProps> = ({
                 onClick={() => setEnrollmentTerm('fall')}
                 style={{
                   border: 'none',
-                  padding: '3px 10px',
+                  padding: '2px 8px',
                   borderRadius: '9999px',
-                  fontSize: '0.74rem',
+                  fontSize: '0.7rem',
                   fontWeight: 600,
                   cursor: 'pointer',
                   background: enrollmentTerm === 'fall' ? '#4f46e5' : 'transparent',
@@ -134,16 +136,16 @@ export const TimelineCanvas: React.FC<TimelineCanvasProps> = ({
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.74rem', color: '#475569' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.72rem', color: '#475569' }}>
             <span style={{ fontWeight: 700 }}>CAP:</span>
             <select
               value={capLimit}
               onChange={(e) => setCapLimit(Number(e.target.value))}
               style={{
-                padding: '2px 6px',
+                padding: '2px 5px',
                 borderRadius: '6px',
                 border: '1px solid #cbd5e1',
-                fontSize: '0.74rem',
+                fontSize: '0.72rem',
                 background: '#ffffff',
                 fontWeight: 700,
                 color: '#4f46e5',
@@ -158,7 +160,7 @@ export const TimelineCanvas: React.FC<TimelineCanvasProps> = ({
           </div>
         </div>
 
-        {/* Mobile Year Filter Tabs (Visible on mobile/tablets) */}
+        {/* Mobile Year Filter Tabs */}
         <div className="mobile-year-tabs">
           <button
             onClick={() => setSelectedMobileYear('all')}
@@ -178,7 +180,7 @@ export const TimelineCanvas: React.FC<TimelineCanvasProps> = ({
         </div>
       </div>
 
-      <div id="zento-timeline-board" style={{ flex: 1, padding: '12px', overflowX: 'auto' }}>
+      <div id="zento-timeline-board" style={{ flex: 1, padding: '8px', overflowX: 'auto' }}>
         <div className="timeline-grid" style={{ gridTemplateColumns: `repeat(${displayedYears.length}, 1fr)` }}>
           {displayedYears.map((year) => {
             const yearItems = plan.filter((p) => p.year === year);
@@ -244,7 +246,7 @@ export const TimelineCanvas: React.FC<TimelineCanvasProps> = ({
                             border: '1px dashed #e2e8f0',
                             borderRadius: '4px',
                             margin: '4px 0',
-                            minHeight: '40px',
+                            minHeight: '36px',
                           }}
                         >
                           ここに配置
@@ -304,7 +306,7 @@ export const TimelineCanvas: React.FC<TimelineCanvasProps> = ({
                                 borderLeft: hasWarn ? '4px solid #e11d48' : (cardStyle ? `4px solid ${cardStyle.stripeColor}` : '3px solid #6366f1'),
                                 borderRadius: '6px',
                                 padding: '6px 8px',
-                                marginBottom: '6px',
+                                marginBottom: '5px',
                                 boxShadow: '0 1px 2px rgba(0,0,0,0.03)',
                                 transition: 'all 0.15s ease',
                               }}
@@ -381,7 +383,7 @@ export const TimelineCanvas: React.FC<TimelineCanvasProps> = ({
                               <div
                                 className="flex-between"
                                 style={{
-                                  marginTop: '6px',
+                                  marginTop: '5px',
                                   fontSize: '0.68rem',
                                   color: '#64748b',
                                   alignItems: 'center',
