@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Search, Plus, Check, ChevronUp, ChevronDown, Filter, SlidersHorizontal, Star } from 'lucide-react';
-import type { Course } from '../types/syllabus';
+import type { Course, Quarter } from '../types/syllabus';
+import { isQuarterAvailable } from '../utils/prerequisiteChecker';
 import {
   getCourseCategoryStyle,
   getCourseKubun,
@@ -34,6 +35,7 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
 
   // Filter Dimensions
   const [selectedYears, setSelectedYears] = useState<Set<number>>(new Set());
+  const [selectedQuarters, setSelectedQuarters] = useState<Set<Quarter>>(new Set());
   const [selectedKubuns, setSelectedKubuns] = useState<Set<CourseKubun>>(new Set());
   const [selectedCategories, setSelectedCategories] = useState<Set<CourseBunrui>>(new Set());
   const [selectedMethods, setSelectedMethods] = useState<Set<string>>(new Set());
@@ -67,6 +69,7 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
 
   const activeFilterCount =
     selectedYears.size +
+    selectedQuarters.size +
     selectedKubuns.size +
     selectedCategories.size +
     selectedMethods.size +
@@ -107,6 +110,11 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
         if (selectedYears.size > 0) {
           const yNum = parseInt(c.履修想定年次 || '1') || 1;
           if (!selectedYears.has(yNum)) return false;
+        }
+
+        if (selectedQuarters.size > 0) {
+          const matchQ = Array.from(selectedQuarters).some((q) => isQuarterAvailable(c.開講Q, q));
+          if (!matchQ) return false;
         }
 
         if (selectedKubuns.size > 0) {
@@ -155,7 +163,7 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
         const getYearNum = (yStr?: string) => parseInt(yStr || '1') || 1;
         return getYearNum(a.履修想定年次) - getYearNum(b.履修想定年次);
       });
-  }, [courses, searchQuery, favoritesOnly, favoriteNames, selectedYears, selectedKubuns, selectedCategories, selectedMethods, selectedEvals, unplannedOnly, sortBy, plannedNames]);
+  }, [courses, searchQuery, favoritesOnly, favoriteNames, selectedYears, selectedQuarters, selectedKubuns, selectedCategories, selectedMethods, selectedEvals, unplannedOnly, sortBy, plannedNames]);
 
   return (
     <aside
@@ -289,35 +297,68 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
       {/* Expandable Filter Panel (Toggled by 絞り込み button) */}
       {isFilterPanelOpen && (
         <div style={{ padding: '10px 12px', borderBottom: '1px solid #e2e8f0', background: '#f8fafc', flexShrink: 0, maxHeight: '240px', overflowY: 'auto' }}>
-          {/* 想定年次 */}
-          <div style={{ marginBottom: '6px' }}>
-            <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>
-              想定年次
+          {/* 想定年次 & 開講クォーター */}
+          <div style={{ display: 'flex', gap: '12px', marginBottom: '6px', flexWrap: 'wrap' }}>
+            <div style={{ flex: 1, minWidth: '120px' }}>
+              <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>
+                想定年次
+              </div>
+              <div style={{ display: 'flex', gap: '4px', overflowX: 'auto', paddingBottom: '2px' }}>
+                {[1, 2, 3, 4].map((y) => {
+                  const isSelected = selectedYears.has(y);
+                  return (
+                    <button
+                      key={y}
+                      onClick={() => toggleSelection(selectedYears, y, setSelectedYears)}
+                      style={{
+                        fontSize: '0.68rem',
+                        padding: '2px 8px',
+                        fontWeight: 600,
+                        borderRadius: '14px',
+                        border: '1px solid',
+                        borderColor: isSelected ? '#4f46e5' : '#cbd5e1',
+                        background: isSelected ? '#4f46e5' : '#ffffff',
+                        color: isSelected ? '#ffffff' : '#475569',
+                        cursor: 'pointer',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {y}年次
+                    </button>
+                  );
+                })}
+              </div>
             </div>
-            <div style={{ display: 'flex', gap: '4px', overflowX: 'auto', paddingBottom: '2px' }}>
-              {[1, 2, 3, 4].map((y) => {
-                const isSelected = selectedYears.has(y);
-                return (
-                  <button
-                    key={y}
-                    onClick={() => toggleSelection(selectedYears, y, setSelectedYears)}
-                    style={{
-                      fontSize: '0.68rem',
-                      padding: '2px 8px',
-                      fontWeight: 600,
-                      borderRadius: '14px',
-                      border: '1px solid',
-                      borderColor: isSelected ? '#4f46e5' : '#cbd5e1',
-                      background: isSelected ? '#4f46e5' : '#ffffff',
-                      color: isSelected ? '#ffffff' : '#475569',
-                      cursor: 'pointer',
-                      whiteSpace: 'nowrap',
-                    }}
-                  >
-                    {y}年次
-                  </button>
-                );
-              })}
+
+            <div style={{ flex: 1, minWidth: '120px' }}>
+              <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>
+                開講クォーター
+              </div>
+              <div style={{ display: 'flex', gap: '4px', overflowX: 'auto', paddingBottom: '2px' }}>
+                {(['1Q', '2Q', '3Q', '4Q'] as const).map((q) => {
+                  const isSelected = selectedQuarters.has(q);
+                  return (
+                    <button
+                      key={q}
+                      onClick={() => toggleSelection(selectedQuarters, q, setSelectedQuarters)}
+                      style={{
+                        fontSize: '0.68rem',
+                        padding: '2px 8px',
+                        fontWeight: 600,
+                        borderRadius: '14px',
+                        border: '1px solid',
+                        borderColor: isSelected ? '#4f46e5' : '#cbd5e1',
+                        background: isSelected ? '#4f46e5' : '#ffffff',
+                        color: isSelected ? '#ffffff' : '#475569',
+                        cursor: 'pointer',
+                        whiteSpace: 'nowrap',
+                      }}
+                    >
+                      {q}
+                    </button>
+                  );
+                })}
+              </div>
             </div>
           </div>
 
