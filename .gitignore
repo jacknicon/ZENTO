@@ -21,9 +21,12 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-# Scratch & Dev temporary files
+# Scratch & Dev temporary scripts
 scratch/
 *.tmp
+build_perfect_presets.js
+test_perfect_gen.js
+verify_final.js
 
 # Editor & System files
 .vscode/*
