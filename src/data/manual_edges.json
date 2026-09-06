@@ -1,0 +1,1883 @@
+[
+  {
+    "source": "イラストとその活用A",
+    "target": "イラストとその活用C",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:09:13.065825"
+    },
+    "directed": false
+  },
+  {
+    "source": "イラストとその活用A",
+    "target": "イラストとその活用D",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:09:16.068006"
+    },
+    "directed": false
+  },
+  {
+    "source": "イラストとその活用B",
+    "target": "イラストとその活用C",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:09:28.600237"
+    },
+    "directed": false
+  },
+  {
+    "source": "イラストとその活用B",
+    "target": "イラストとその活用D",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:09:31.533544"
+    },
+    "directed": false
+  },
+  {
+    "source": "イラストとその活用C",
+    "target": "イラストとその活用D",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:09:37.750120"
+    },
+    "directed": false
+  },
+  {
+    "source": "イラストとエンタテインメントA",
+    "target": "イラストとエンタテインメントB",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:09:46.199286"
+    },
+    "directed": false
+  },
+  {
+    "source": "イラストとエンタテインメントA",
+    "target": "イラストとエンタテインメントC",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:10:04.765142"
+    },
+    "directed": false
+  },
+  {
+    "source": "イラストとエンタテインメントA",
+    "target": "イラストとエンタテインメントD",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:10:10.365216"
+    },
+    "directed": false
+  },
+  {
+    "source": "イラストとエンタテインメントB",
+    "target": "イラストとエンタテインメントC",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:10:20.333209"
+    },
+    "directed": false
+  },
+  {
+    "source": "イラストとエンタテインメントB",
+    "target": "イラストとエンタテインメントD",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:10:24.014797"
+    },
+    "directed": false
+  },
+  {
+    "source": "イラストとエンタテインメントC",
+    "target": "イラストとエンタテインメントD",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:10:31.414892"
+    },
+    "directed": false
+  },
+  {
+    "source": "イラストとデザインA",
+    "target": "イラストとデザインB",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:10:45.197662"
+    },
+    "directed": false
+  },
+  {
+    "source": "イラストとデザインA",
+    "target": "イラストとデザインC",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:10:49.348859"
+    },
+    "directed": false
+  },
+  {
+    "source": "イラストとデザインA",
+    "target": "イラストとデザインD",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:10:53.663373"
+    },
+    "directed": false
+  },
+  {
+    "source": "イラストとデザインB",
+    "target": "イラストとデザインC",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:11:36.214425"
+    },
+    "directed": false
+  },
+  {
+    "source": "イラストとデザインB",
+    "target": "イラストとデザインD",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:11:40.295779"
+    },
+    "directed": false
+  },
+  {
+    "source": "イラストとデザインC",
+    "target": "イラストとデザインD",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:11:49.212221"
+    },
+    "directed": false
+  },
+  {
+    "source": "地域アントレプレナーシップ",
+    "target": "ゼミ（地域づくり新事業ワークショップ）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:16:08.860043"
+    },
+    "directed": false
+  },
+  {
+    "source": "地域課題の解決とイノベーション",
+    "target": "ゼミ（地域づくり新事業ワークショップ）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:16:27.458574"
+    },
+    "directed": false
+  },
+  {
+    "source": "子どもと地域づくり",
+    "target": "ゼミ（地域づくり新事業ワークショップ）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:16:35.939492"
+    },
+    "directed": false
+  },
+  {
+    "source": "地域研究",
+    "target": "ゼミ（地域づくり新事業ワークショップ）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:17:43.697509"
+    },
+    "directed": false
+  },
+  {
+    "source": "地域研究",
+    "target": "子どもと地域づくり",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:18:11.754937"
+    },
+    "directed": false
+  },
+  {
+    "source": "地域アントレプレナーシップ",
+    "target": "子どもと地域づくり",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:18:16.986776"
+    },
+    "directed": false
+  },
+  {
+    "source": "地域課題の解決とイノベーション",
+    "target": "子どもと地域づくり",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:18:27.386406"
+    },
+    "directed": false
+  },
+  {
+    "source": "地域課題の解決とイノベーション",
+    "target": "地域研究",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:20:08.335443"
+    },
+    "directed": false
+  },
+  {
+    "source": "地域課題の解決とイノベーション",
+    "target": "地域アントレプレナーシップ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:20:14.733386"
+    },
+    "directed": false
+  },
+  {
+    "source": "Webユーザーエクスペリエンス",
+    "target": "Webデザイン演習",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:27:04.522555"
+    },
+    "directed": false
+  },
+  {
+    "source": "メディアアート史",
+    "target": "ジェネラティブアート演習",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:32:14.403526"
+    },
+    "directed": false
+  },
+  {
+    "source": "メディアアート史",
+    "target": "ゼミ（メディアアート）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:32:34.481673"
+    },
+    "directed": false
+  },
+  {
+    "source": "Webユーザーエクスペリエンス",
+    "target": "デジタル画像技法論Ⅰ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:35:24.529115"
+    },
+    "directed": false
+  },
+  {
+    "source": "Webユーザーエクスペリエンス",
+    "target": "デジタル画像技法論Ⅱ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:35:29.316578"
+    },
+    "directed": false
+  },
+  {
+    "source": "Webユーザーエクスペリエンス",
+    "target": "デジタル画像技法論Ⅲ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:35:34.345026"
+    },
+    "directed": false
+  },
+  {
+    "source": "Webユーザーエクスペリエンス",
+    "target": "Webアプリケーション開発1",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:35:47.060696"
+    },
+    "directed": false
+  },
+  {
+    "source": "地域アントレプレナーシップ",
+    "target": "スマート田舎のススメ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:37:14.692106"
+    },
+    "directed": false
+  },
+  {
+    "source": "スマート田舎のススメ",
+    "target": "ゼミ（地域づくり新事業ワークショップ）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:37:35.089288"
+    },
+    "directed": false
+  },
+  {
+    "source": "映像プロデューサー論",
+    "target": "動画クリエイター技術演習",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:39:31.121489"
+    },
+    "directed": false
+  },
+  {
+    "source": "映像プロデューサー論",
+    "target": "コンテンツ産業論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:39:48.120654"
+    },
+    "directed": false
+  },
+  {
+    "source": "映像プロデューサー論",
+    "target": "マンガの企画立案とプロデュース論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:40:02.002501"
+    },
+    "directed": false
+  },
+  {
+    "source": "アニメ産業史",
+    "target": "映像プロデューサー論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:40:21.618989"
+    },
+    "directed": false
+  },
+  {
+    "source": "クリエイティブ現場論",
+    "target": "映像プロデューサー論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:40:53.717201"
+    },
+    "directed": false
+  },
+  {
+    "source": "ネット情報発信概論",
+    "target": "映像プロデューサー論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:41:35.802194"
+    },
+    "directed": false
+  },
+  {
+    "source": "統計学入門",
+    "target": "統計学展望",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:41:57.017607"
+    },
+    "directed": false
+  },
+  {
+    "source": "統計学展望",
+    "target": "事例から学ぶ統計学",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:42:09.150467"
+    },
+    "directed": false
+  },
+  {
+    "source": "統計学展望",
+    "target": "計算機実験で学ぶ確率とモンテカルロ法",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:50:07.954294"
+    },
+    "directed": false
+  },
+  {
+    "source": "統計学展望",
+    "target": "統計数理の方法",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:50:30.787116"
+    },
+    "directed": false
+  },
+  {
+    "source": "計算機実験で学ぶ確率とモンテカルロ法",
+    "target": "統計数理の方法",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:52:09.285253"
+    },
+    "directed": false
+  },
+  {
+    "source": "解析学1",
+    "target": "統計数理の方法",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:52:31.096025"
+    },
+    "directed": false
+  },
+  {
+    "source": "解析学2",
+    "target": "統計数理の方法",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:52:36.137742"
+    },
+    "directed": false
+  },
+  {
+    "source": "線形代数1",
+    "target": "統計数理の方法",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:53:09.083102"
+    },
+    "directed": false
+  },
+  {
+    "source": "線形代数2",
+    "target": "統計数理の方法",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:53:13.916508"
+    },
+    "directed": false
+  },
+  {
+    "source": "イラストとその活用A",
+    "target": "イラストとその活用B",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:56:43.912745"
+    },
+    "directed": false
+  },
+  {
+    "source": "自然言語処理の方法",
+    "target": "ディープラーニング3",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:57:15.377047"
+    },
+    "directed": false
+  },
+  {
+    "source": "農業とデジタルテクノロジー",
+    "target": "スマート田舎のススメ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:58:55.090611"
+    },
+    "directed": false
+  },
+  {
+    "source": "地域アントレプレナーシップ",
+    "target": "農業とデジタルテクノロジー",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T21:59:19.190153"
+    },
+    "directed": false
+  },
+  {
+    "source": "メディアアート史",
+    "target": "3Dモデリング技術演習",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:25:02.984353"
+    },
+    "directed": false
+  },
+  {
+    "source": "3Dモデリング技術演習",
+    "target": "ゼミ（メディアアート）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:25:13.170316"
+    },
+    "directed": false
+  },
+  {
+    "source": "3Dモデリング技術演習",
+    "target": "ゲームプログラミング演習",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:25:31.985316"
+    },
+    "directed": false
+  },
+  {
+    "source": "3Dモデリング技術演習",
+    "target": "動画クリエイター技術演習",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:25:55.999334"
+    },
+    "directed": false
+  },
+  {
+    "source": "AI社会の歩き方",
+    "target": "人工知能活用実践",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:26:39.215237"
+    },
+    "directed": false
+  },
+  {
+    "source": "AI社会の歩き方",
+    "target": "機械学習概論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:27:01.782469"
+    },
+    "directed": false
+  },
+  {
+    "source": "AI社会の歩き方",
+    "target": "情報倫理と法",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:27:25.617393"
+    },
+    "directed": false
+  },
+  {
+    "source": "AI社会の歩き方",
+    "target": "SFから考える未来ビジョン",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:27:40.931097"
+    },
+    "directed": false
+  },
+  {
+    "source": "Webアプリケーション開発1",
+    "target": "JavaScriptによる自動化、効率化",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:29:59.568728"
+    },
+    "directed": false
+  },
+  {
+    "source": "Webアプリケーション開発2",
+    "target": "JavaScriptによる自動化、効率化",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:30:04.043196"
+    },
+    "directed": false
+  },
+  {
+    "source": "JavaScriptによる自動化、効率化",
+    "target": "Webアプリケーション開発3",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:30:08.277870"
+    },
+    "directed": false
+  },
+  {
+    "source": "JavaScriptによる自動化、効率化",
+    "target": "Webアプリケーション開発4",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:30:14.810037"
+    },
+    "directed": false
+  },
+  {
+    "source": "SFから考える未来ビジョン",
+    "target": "現代社会理論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:31:18.991487"
+    },
+    "directed": false
+  },
+  {
+    "source": "SFから考える未来ビジョン",
+    "target": "未来社会デザイン論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:31:37.542346"
+    },
+    "directed": false
+  },
+  {
+    "source": "SFから考える未来ビジョン",
+    "target": "ジェネラティブアート演習",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:32:01.607480"
+    },
+    "directed": false
+  },
+  {
+    "source": "線形代数1",
+    "target": "Wolfram言語で学ぶ科学計算",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:33:29.370449"
+    },
+    "directed": false
+  },
+  {
+    "source": "解析学1",
+    "target": "Wolfram言語で学ぶ科学計算",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:33:37.989029"
+    },
+    "directed": false
+  },
+  {
+    "source": "Wolfram言語で学ぶ科学計算",
+    "target": "量子力学",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:34:05.004837"
+    },
+    "directed": false
+  },
+  {
+    "source": "力学",
+    "target": "Wolfram言語で学ぶ科学計算",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:34:14.704280"
+    },
+    "directed": false
+  },
+  {
+    "source": "Wolfram言語で学ぶ科学計算",
+    "target": "熱統計力学",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:34:33.137148"
+    },
+    "directed": false
+  },
+  {
+    "source": "Wolfram言語で学ぶ科学計算",
+    "target": "電磁気学",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:34:49.253223"
+    },
+    "directed": false
+  },
+  {
+    "source": "ウェルビーイングをデザインする",
+    "target": "こころの成り立ちとメンタルヘルス",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:36:21.415507"
+    },
+    "directed": false
+  },
+  {
+    "source": "心理学",
+    "target": "ウェルビーイングをデザインする",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:36:35.732393"
+    },
+    "directed": false
+  },
+  {
+    "source": "ウェルビーイングをデザインする",
+    "target": "ゼミ（多様化する家族）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:37:11.065767"
+    },
+    "directed": false
+  },
+  {
+    "source": "インターネットのしくみ",
+    "target": "インターネット概論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:38:06.947178"
+    },
+    "directed": false
+  },
+  {
+    "source": "インターネットのしくみ",
+    "target": "ゼミ（インターネットのしくみ（応用））",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:38:21.947548"
+    },
+    "directed": false
+  },
+  {
+    "source": "インターネットのしくみ",
+    "target": "Webセキュリティ演習",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:38:41.246825"
+    },
+    "directed": false
+  },
+  {
+    "source": "対人コミュニケーション論",
+    "target": "コラボレーション・クリエイティブ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:39:23.861839"
+    },
+    "directed": false
+  },
+  {
+    "source": "クリエイティブ現場論",
+    "target": "コラボレーション・クリエイティブ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:39:38.879844"
+    },
+    "directed": false
+  },
+  {
+    "source": "コラボレーション・クリエイティブ",
+    "target": "プロジェクトマネジメント概論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:39:57.813883"
+    },
+    "directed": false
+  },
+  {
+    "source": "アニメ産業史",
+    "target": "コンテンツ産業論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:41:11.444908"
+    },
+    "directed": false
+  },
+  {
+    "source": "マンガ産業史",
+    "target": "コンテンツ産業論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:41:29.809479"
+    },
+    "directed": false
+  },
+  {
+    "source": "日本のゲーム産業史",
+    "target": "コンテンツ産業論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:41:40.723510"
+    },
+    "directed": false
+  },
+  {
+    "source": "IT産業史",
+    "target": "コンテンツ産業論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:41:48.975349"
+    },
+    "directed": false
+  },
+  {
+    "source": "企業経営",
+    "target": "コンテンツ産業論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:42:13.290322"
+    },
+    "directed": false
+  },
+  {
+    "source": "デジタル・マーケティング",
+    "target": "ゼミ（AIデータサイエンス価値創造ゼミⅡ）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:43:28.038571"
+    },
+    "directed": false
+  },
+  {
+    "source": "マーケティング × データサイエンス",
+    "target": "ゼミ（AIデータサイエンス価値創造ゼミⅡ）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:43:40.357928"
+    },
+    "directed": false
+  },
+  {
+    "source": "伝わる論理とコミュニケーション",
+    "target": "ゼミ（AIデータサイエンス価値創造ゼミⅡ）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:44:00.272779"
+    },
+    "directed": false
+  },
+  {
+    "source": "プロジェクトマネジメント概論",
+    "target": "ゼミ（トークイベントをつくる）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:46:00.636297"
+    },
+    "directed": false
+  },
+  {
+    "source": "対人コミュニケーション論",
+    "target": "ゼミ（トークイベントをつくる）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:46:16.267670"
+    },
+    "directed": false
+  },
+  {
+    "source": "コラボレーション・クリエイティブ",
+    "target": "ゼミ（トークイベントをつくる）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:46:28.501594"
+    },
+    "directed": false
+  },
+  {
+    "source": "近・現代アート概論",
+    "target": "ゼミ（展覧会のつくりかた）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:47:33.032866"
+    },
+    "directed": false
+  },
+  {
+    "source": "芸術と文化資本Ⅰ",
+    "target": "ゼミ（展覧会のつくりかた）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:47:44.366955"
+    },
+    "directed": false
+  },
+  {
+    "source": "芸術と文化資本Ⅱ",
+    "target": "ゼミ（展覧会のつくりかた）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:47:48.715640"
+    },
+    "directed": false
+  },
+  {
+    "source": "プロジェクトマネジメント概論",
+    "target": "ゼミ（展覧会のつくりかた）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T22:48:13.648987"
+    },
+    "directed": false
+  },
+  {
+    "source": "ゼミ（数理科学特論ゼミⅠ）",
+    "target": "ゼミ（数理科学特論ゼミⅡ）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T23:42:52.298117"
+    },
+    "directed": false
+  },
+  {
+    "source": "ゼミ（数理科学特論ゼミⅠ）",
+    "target": "ゼミ（数理科学特論ゼミⅢ）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T23:43:00.263561"
+    },
+    "directed": false
+  },
+  {
+    "source": "ゼミ（数理科学特論ゼミⅠ）",
+    "target": "ゼミ（数理科学特論ゼミⅣ）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T23:43:06.628533"
+    },
+    "directed": false
+  },
+  {
+    "source": "情報セキュリティ概論",
+    "target": "ゼミ（情報セキュリティ）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T23:57:44.290191"
+    },
+    "directed": true
+  },
+  {
+    "source": "情報倫理と法",
+    "target": "ゼミ（情報セキュリティ）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T23:57:58.004339"
+    },
+    "directed": true
+  },
+  {
+    "source": "インターネット概論",
+    "target": "ゼミ（情報セキュリティ）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T23:58:13.703197"
+    },
+    "directed": true
+  },
+  {
+    "source": "ゼミ（情報セキュリティ）",
+    "target": "暗号技術とその応用",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T23:58:47.707503"
+    },
+    "directed": false
+  },
+  {
+    "source": "Webセキュリティ演習",
+    "target": "ゼミ（情報セキュリティ）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-04T23:59:10.459105"
+    },
+    "directed": false
+  },
+  {
+    "source": "社会学Ⅰ",
+    "target": "ゼミ（質的データ分析&エージェントシミュレーション）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:10:46.711909"
+    },
+    "directed": false
+  },
+  {
+    "source": "社会学Ⅱ",
+    "target": "ゼミ（質的データ分析&エージェントシミュレーション）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:10:57.400261"
+    },
+    "directed": false
+  },
+  {
+    "source": "社会学Ⅲ",
+    "target": "ゼミ（質的データ分析&エージェントシミュレーション）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:11:02.259198"
+    },
+    "directed": false
+  },
+  {
+    "source": "データサイエンス概論",
+    "target": "ゼミ（質的データ分析&エージェントシミュレーション）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:11:36.209738"
+    },
+    "directed": false
+  },
+  {
+    "source": "ソーシャルイノベーション概論",
+    "target": "地域課題の解決とイノベーション",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:19:48.430773"
+    },
+    "directed": true
+  },
+  {
+    "source": "ソーシャルイノベーション概論",
+    "target": "人新世の人類学",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:20:42.619708"
+    },
+    "directed": true
+  },
+  {
+    "source": "ソーシャルイノベーション概論",
+    "target": "課題解決と改革のリーダーシップ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:21:13.852106"
+    },
+    "directed": true
+  },
+  {
+    "source": "デジタルトランスフォーメーション時代の働き方",
+    "target": "プロジェクトマネジメント概論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:26:22.463858"
+    },
+    "directed": false
+  },
+  {
+    "source": "デジタルトランスフォーメーション時代の働き方",
+    "target": "コラボレーション・クリエイティブ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:27:29.825536"
+    },
+    "directed": false
+  },
+  {
+    "source": "ITリテラシー",
+    "target": "デジタルトランスフォーメーション時代の働き方",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:28:00.869764"
+    },
+    "directed": true
+  },
+  {
+    "source": "デジタル画像創作論Ⅰ",
+    "target": "デジタル画像創作論Ⅱ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:28:32.916548"
+    },
+    "directed": false
+  },
+  {
+    "source": "デジタル画像創作論Ⅰ",
+    "target": "デジタル画像創作論Ⅲ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:28:37.813424"
+    },
+    "directed": false
+  },
+  {
+    "source": "デジタル画像技法論Ⅰ",
+    "target": "デジタル画像創作論Ⅰ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:29:37.759937"
+    },
+    "directed": false
+  },
+  {
+    "source": "デジタル画像技法論Ⅱ",
+    "target": "デジタル画像創作論Ⅰ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:29:54.144400"
+    },
+    "directed": false
+  },
+  {
+    "source": "デジタル画像技法論Ⅲ",
+    "target": "デジタル画像創作論Ⅰ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:29:59.095235"
+    },
+    "directed": false
+  },
+  {
+    "source": "デジタル画像創作論Ⅱ",
+    "target": "デジタル画像創作論Ⅲ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:30:13.280837"
+    },
+    "directed": false
+  },
+  {
+    "source": "デジタル画像技法論Ⅰ",
+    "target": "デジタル画像活用Ⅰ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:31:38.262824"
+    },
+    "directed": true
+  },
+  {
+    "source": "デジタル画像技法論Ⅱ",
+    "target": "デジタル画像活用Ⅰ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:31:56.785874"
+    },
+    "directed": true
+  },
+  {
+    "source": "デジタル画像活用Ⅰ",
+    "target": "デジタル画像活用Ⅱ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:32:05.466636"
+    },
+    "directed": false
+  },
+  {
+    "source": "Linux概論",
+    "target": "データベース運用実践",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:33:18.214808"
+    },
+    "directed": true
+  },
+  {
+    "source": "Webアプリケーション開発4",
+    "target": "データベース運用実践",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:33:34.854582"
+    },
+    "directed": true
+  },
+  {
+    "source": "ビッグデータ分析概論",
+    "target": "データベース運用実践",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:35:20.309737"
+    },
+    "directed": true
+  },
+  {
+    "source": "データサイエンス概論",
+    "target": "データベース運用実践",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:35:35.896815"
+    },
+    "directed": true
+  },
+  {
+    "source": "企業経営",
+    "target": "ネットワーク産業論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:41:51.905035"
+    },
+    "directed": false
+  },
+  {
+    "source": "ネットワーク産業論",
+    "target": "スタートアップ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:42:04.550314"
+    },
+    "directed": false
+  },
+  {
+    "source": "ネットワーク産業論",
+    "target": "デジタル・マーケティング",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:42:27.386039"
+    },
+    "directed": false
+  },
+  {
+    "source": "ネットワーク産業論",
+    "target": "インターネット概論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:52:43.432362"
+    },
+    "directed": false
+  },
+  {
+    "source": "民俗学",
+    "target": "フィールドワークで学ぶ宗教思想史",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:56:40.238677"
+    },
+    "directed": false
+  },
+  {
+    "source": "文化人類学Ⅰ",
+    "target": "フィールドワークで学ぶ宗教思想史",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:56:50.028882"
+    },
+    "directed": false
+  },
+  {
+    "source": "文化人類学Ⅱ",
+    "target": "フィールドワークで学ぶ宗教思想史",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T00:58:31.824012"
+    },
+    "directed": false
+  },
+  {
+    "source": "社会学Ⅰ",
+    "target": "メディア論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:00:59.018335"
+    },
+    "directed": false
+  },
+  {
+    "source": "メディア論",
+    "target": "社会学Ⅱ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:01:03.359361"
+    },
+    "directed": false
+  },
+  {
+    "source": "メディア論",
+    "target": "コンテンツ産業論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:01:24.173275"
+    },
+    "directed": false
+  },
+  {
+    "source": "ネット情報発信概論",
+    "target": "メディア論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:01:41.201064"
+    },
+    "directed": false
+  },
+  {
+    "source": "世界が変わる編集力",
+    "target": "コラボレーション・クリエイティブ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:05:43.139748"
+    },
+    "directed": false
+  },
+  {
+    "source": "世界が変わる編集力",
+    "target": "SFから考える未来ビジョン",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:06:01.755661"
+    },
+    "directed": false
+  },
+  {
+    "source": "世界が変わる編集力",
+    "target": "ゼミ（展覧会のつくりかた）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:06:21.215895"
+    },
+    "directed": false
+  },
+  {
+    "source": "世界が変わる編集力",
+    "target": "ゼミ（トークイベントをつくる）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:06:37.887564"
+    },
+    "directed": false
+  },
+  {
+    "source": "デジタル画像技法論Ⅰ",
+    "target": "デジタルイラスト演習基礎",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:12:57.982642"
+    },
+    "directed": false
+  },
+  {
+    "source": "デジタルイラスト演習基礎",
+    "target": "イラストとその活用A",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:13:27.764077"
+    },
+    "directed": false
+  },
+  {
+    "source": "デジタルイラスト演習基礎",
+    "target": "イラストとデザインA",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:13:33.949306"
+    },
+    "directed": false
+  },
+  {
+    "source": "イラストとエンタテインメントA",
+    "target": "デジタルイラスト演習基礎",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:13:39.896106"
+    },
+    "directed": false
+  },
+  {
+    "source": "二次創作の歴史から見るネット文化",
+    "target": "コンテンツ産業論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:14:36.243182"
+    },
+    "directed": false
+  },
+  {
+    "source": "二次創作の歴史から見るネット文化",
+    "target": "アニメ産業史",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:14:56.797800"
+    },
+    "directed": false
+  },
+  {
+    "source": "二次創作の歴史から見るネット文化",
+    "target": "マンガ産業史",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:15:18.213074"
+    },
+    "directed": false
+  },
+  {
+    "source": "二次創作の歴史から見るネット文化",
+    "target": "ネット時代の著作権",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:16:06.081521"
+    },
+    "directed": false
+  },
+  {
+    "source": "キャリアデザインⅠ（自己理解）",
+    "target": "人生設計とお金の管理",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:22:54.349881"
+    },
+    "directed": false
+  },
+  {
+    "source": "人生設計とお金の管理",
+    "target": "キャリアデザインⅡ（仕事理解）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:23:01.891797"
+    },
+    "directed": false
+  },
+  {
+    "source": "人生設計とお金の管理",
+    "target": "キャリアデザインⅢ（就活実践）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:23:08.021956"
+    },
+    "directed": false
+  },
+  {
+    "source": "企業経営と会計",
+    "target": "人生設計とお金の管理",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:23:43.072377"
+    },
+    "directed": false
+  },
+  {
+    "source": "哲学概論",
+    "target": "公共哲学",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:34:48.044659"
+    },
+    "directed": true
+  },
+  {
+    "source": "公共哲学",
+    "target": "科学哲学",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:35:08.424746"
+    },
+    "directed": false
+  },
+  {
+    "source": "公共哲学",
+    "target": "政治を超える哲学Ⅰ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:35:27.093790"
+    },
+    "directed": false
+  },
+  {
+    "source": "公共哲学",
+    "target": "政治を超える哲学Ⅱ",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:35:31.735908"
+    },
+    "directed": false
+  },
+  {
+    "source": "共創地球論",
+    "target": "公共哲学",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:37:58.553580"
+    },
+    "directed": false
+  },
+  {
+    "source": "ソーシャルイノベーション概論",
+    "target": "共創場デザイン演習",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:39:35.555675"
+    },
+    "directed": true
+  },
+  {
+    "source": "プロジェクトマネジメント概論",
+    "target": "共創場デザイン演習",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:39:58.694260"
+    },
+    "directed": true
+  },
+  {
+    "source": "大学とメディアの人類史",
+    "target": "メディア論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:44:23.558321"
+    },
+    "directed": false
+  },
+  {
+    "source": "世界が変わる編集力",
+    "target": "大学とメディアの人類史",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:44:41.492769"
+    },
+    "directed": false
+  },
+  {
+    "source": "情報収集と伝達技術",
+    "target": "アカデミックリテラシー",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:47:02.558136"
+    },
+    "directed": false
+  },
+  {
+    "source": "情報収集と伝達技術",
+    "target": "人工知能活用実践",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:47:17.850306"
+    },
+    "directed": false
+  },
+  {
+    "source": "情報収集と伝達技術",
+    "target": "伝わる論理とコミュニケーション",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:47:32.969793"
+    },
+    "directed": false
+  },
+  {
+    "source": "情報社会の総合安全保障",
+    "target": "公共哲学",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:57:55.711979"
+    },
+    "directed": false
+  },
+  {
+    "source": "アニメ産業史",
+    "target": "日本大衆文化史",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:59:23.526967"
+    },
+    "directed": false
+  },
+  {
+    "source": "日本のゲーム産業史",
+    "target": "日本大衆文化史",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:59:35.902796"
+    },
+    "directed": false
+  },
+  {
+    "source": "マンガ産業史",
+    "target": "日本大衆文化史",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T01:59:52.321331"
+    },
+    "directed": false
+  },
+  {
+    "source": "IT産業史",
+    "target": "日本大衆文化史",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:00:03.514190"
+    },
+    "directed": false
+  },
+  {
+    "source": "二次創作の歴史から見るネット文化",
+    "target": "日本大衆文化史",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:01:32.505922"
+    },
+    "directed": false
+  },
+  {
+    "source": "逆さ科学史",
+    "target": "日本科学史",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:02:24.507428"
+    },
+    "directed": false
+  },
+  {
+    "source": "日本科学史",
+    "target": "科学哲学",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:02:39.827958"
+    },
+    "directed": false
+  },
+  {
+    "source": "日本科学史",
+    "target": "科学技術と社会",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:02:52.472509"
+    },
+    "directed": false
+  },
+  {
+    "source": "企業経営",
+    "target": "現代スポーツ構造分析",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:04:29.392754"
+    },
+    "directed": false
+  },
+  {
+    "source": "現代スポーツ構造分析",
+    "target": "デジタル・マーケティング",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:04:44.143800"
+    },
+    "directed": false
+  },
+  {
+    "source": "ソーシャルイノベーション概論",
+    "target": "現代スポーツ構造分析",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:05:19.573759"
+    },
+    "directed": false
+  },
+  {
+    "source": "現代スポーツ構造分析",
+    "target": "メディア論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:05:37.584625"
+    },
+    "directed": false
+  },
+  {
+    "source": "生きてゆくための禅",
+    "target": "公共哲学",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:06:41.886594"
+    },
+    "directed": false
+  },
+  {
+    "source": "生きてゆくための禅",
+    "target": "哲学概論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:06:55.668885"
+    },
+    "directed": false
+  },
+  {
+    "source": "生きてゆくための禅",
+    "target": "こころの成り立ちとメンタルヘルス",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:07:09.032469"
+    },
+    "directed": false
+  },
+  {
+    "source": "生きてゆくための禅",
+    "target": "キャリアデザインⅠ（自己理解）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:07:46.083950"
+    },
+    "directed": false
+  },
+  {
+    "source": "意思決定の能力開発",
+    "target": "社会で活きる囲碁論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:08:30.480258"
+    },
+    "directed": false
+  },
+  {
+    "source": "社会で活きる囲碁論",
+    "target": "交渉・合意形成概論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:08:48.617909"
+    },
+    "directed": false
+  },
+  {
+    "source": "企業経営",
+    "target": "社会で活きる囲碁論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:09:00.347708"
+    },
+    "directed": false
+  },
+  {
+    "source": "生きてゆくための禅",
+    "target": "社会で活きる囲碁論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:09:18.710628"
+    },
+    "directed": false
+  },
+  {
+    "source": "経済言説史",
+    "target": "ミクロ経済学",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:10:14.664989"
+    },
+    "directed": false
+  },
+  {
+    "source": "経済言説史",
+    "target": "マクロ経済学",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:10:27.197293"
+    },
+    "directed": false
+  },
+  {
+    "source": "経済言説史",
+    "target": "マルクス経済学",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:10:37.627568"
+    },
+    "directed": false
+  },
+  {
+    "source": "経済言説史",
+    "target": "ゼミ（経済発展を考える）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:11:01.749720"
+    },
+    "directed": false
+  },
+  {
+    "source": "経済言説史",
+    "target": "ゼミ（計量経済）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:11:12.910336"
+    },
+    "directed": false
+  },
+  {
+    "source": "音楽と社会",
+    "target": "メディア論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:13:04.698363"
+    },
+    "directed": false
+  },
+  {
+    "source": "音楽と社会",
+    "target": "日本大衆文化史",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:13:16.995065"
+    },
+    "directed": false
+  },
+  {
+    "source": "音楽と社会",
+    "target": "コンテンツ産業論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:13:27.433610"
+    },
+    "directed": false
+  },
+  {
+    "source": "Inter-universal Teichmüller Theory 1（宇宙際タイヒミューラー理論 1）",
+    "target": "群論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:30:24.816524"
+    },
+    "directed": true
+  },
+  {
+    "source": "Inter-universal Teichmüller Theory 1（宇宙際タイヒミューラー理論 1）",
+    "target": "環論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:30:40.162322"
+    },
+    "directed": true
+  },
+  {
+    "source": "Inter-universal Teichmüller Theory 1（宇宙際タイヒミューラー理論 1）",
+    "target": "ガロア理論",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:30:54.742168"
+    },
+    "directed": true
+  },
+  {
+    "source": "英語コミュニケーションⅠ（発音）",
+    "target": "多言語ITコミュニケーション",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:36:34.539216"
+    },
+    "directed": false
+  },
+  {
+    "source": "英語コミュニケーションⅠ（発音）",
+    "target": "機械翻訳実践（英語読解・作文）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:36:52.567502"
+    },
+    "directed": false
+  },
+  {
+    "source": "リテラシーと応□のための物語理論",
+    "target": "マンガ絵コンテから学ぶ視覚表現",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:38:46.233046"
+    },
+    "directed": false
+  },
+  {
+    "source": "リテラシーと応□のための物語理論",
+    "target": "ゲーム制作論基礎",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:39:01.750131"
+    },
+    "directed": false
+  },
+  {
+    "source": "リテラシーと応□のための物語理論",
+    "target": "世界が変わる編集力",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:39:17.228014"
+    },
+    "directed": false
+  },
+  {
+    "source": "認知神経科学",
+    "target": "こころの成り立ちとメンタルヘルス",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:46:27.875938"
+    },
+    "directed": true
+  },
+  {
+    "source": "認知神経科学",
+    "target": "心理学実験・調査演習",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:46:38.434358"
+    },
+    "directed": true
+  },
+  {
+    "source": "ゼミ（AIデータサイエンス価値創造ゼミⅠ）",
+    "target": "ゼミ（AIデータサイエンス価値創造ゼミⅡ）",
+    "meta": {
+      "note": "",
+      "created": "2025-10-05T02:50:47.704184"
+    },
+    "directed": false
+  }
+]
