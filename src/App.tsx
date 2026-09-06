@@ -188,6 +188,16 @@ export const App: React.FC = () => {
 
   const selectedCourseObject = selectedSubjectName ? coursesMap.get(selectedSubjectName) || null : null;
 
+  const handleImportFavorites = (names: string[]) => {
+    setFavoriteNames((prev) => {
+      const next = new Set([...Array.from(prev), ...names]);
+      try {
+        localStorage.setItem('zento_favorites_v1', JSON.stringify(Array.from(next)));
+      } catch (e) {}
+      return next;
+    });
+  };
+
   return (
     <div className="zento-layout">
       <DisclaimerModal
@@ -202,6 +212,8 @@ export const App: React.FC = () => {
         coursesMap={coursesMap}
         plan={plan}
         setPlan={setPlan}
+        favoriteNames={favoriteNames}
+        onImportFavorites={handleImportFavorites}
         onOpenGraphModal={() => setIsGraphModalOpen(true)}
         onOpenPresetModal={() => setIsPresetModalOpen(true)}
         onOpenAiModal={() => setIsAiModalOpen(true)}

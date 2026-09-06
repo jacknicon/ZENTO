@@ -27,10 +27,18 @@ export function loadPlanFromLocalStorage(): { plan: PlanItem[]; title: string } 
   }
 }
 
-export function exportPlanToCSV(plan: PlanItem[], coursesMap: Map<string, Course>, title: string): void {
-  const header = ['年次', 'クォーター', '科目名', '単位数', '成績評価', '学問分野', '科目区分'];
+export function exportPlanToCSV(
+  plan: PlanItem[],
+  coursesMap: Map<string, Course>,
+  title: string,
+  favoriteNames?: Set<string>
+): void {
+  const header = ['年次', 'クォーター', '科目名', '単位数', '成績評価', '学問分野', '科目区分', 'キープ'];
+
+  const plannedSubjectNames = new Set(plan.map((p) => p.subjectName));
   const rows = plan.map((item) => {
     const course = coursesMap.get(item.subjectName);
+    const isFav = favoriteNames?.has(item.subjectName) ? '★' : '-';
     return [
       `${item.year}年次`,
       item.quarter,
@@ -39,8 +47,28 @@ export function exportPlanToCSV(plan: PlanItem[], coursesMap: Map<string, Course
       `"${item.grade || '-'}"`,
       `"${(course?.学問分野名 || '').replace(/"/g, '""')}"`,
       `"${(course?.科目区分 || '').replace(/"/g, '""')}"`,
+      `"${isFav}"`,
     ];
   });
+
+  // Export unplaced favorited courses as rows with '-' for Year and Quarter
+  if (favoriteNames) {
+    favoriteNames.forEach((favName) => {
+      if (!plannedSubjectNames.has(favName)) {
+        const course = coursesMap.get(favName);
+        rows.push([
+          '-',
+          '-',
+          `"${favName.replace(/"/g, '""')}"`,
+          course?.単位数 ?? 2,
+          '"-"',
+          `"${(course?.学問分野名 || '').replace(/"/g, '""')}"`,
+          `"${(course?.科目区分 || '').replace(/"/g, '""')}"`,
+          '"★"',
+        ]);
+      }
+    });
+  }
 
   const csvContent = '\uFEFF' + [header.join(','), ...rows.map((r) => r.join(','))].join('\n');
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });

@@ -23,6 +23,8 @@ interface HeaderProps {
   coursesMap: Map<string, any>;
   plan: any[];
   setPlan: (plan: any[]) => void;
+  favoriteNames?: Set<string>;
+  onImportFavorites?: (names: string[]) => void;
   onOpenGraphModal: () => void;
   onOpenPresetModal: () => void;
   onOpenAiModal: () => void;
@@ -38,6 +40,8 @@ export const Header: React.FC<HeaderProps> = ({
   coursesMap,
   plan,
   setPlan,
+  favoriteNames,
+  onImportFavorites,
   onOpenGraphModal,
   onOpenPresetModal,
   onOpenAiModal,
@@ -58,7 +62,7 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   const handleExportCSV = () => {
-    exportPlanToCSV(plan, coursesMap, planTitle);
+    exportPlanToCSV(plan, coursesMap, planTitle, favoriteNames);
     setIsMobileMenuOpen(false);
   };
 
@@ -75,6 +79,9 @@ export const Header: React.FC<HeaderProps> = ({
           if (Array.isArray(json.plan)) {
             setPlan(json.plan);
             if (json.title) setPlanTitle(json.title);
+            if (Array.isArray(json.favorites) && onImportFavorites) {
+              onImportFavorites(json.favorites);
+            }
             alert('JSON計画ファイルを正常に読み込みました。');
           } else {
             alert('有効なZENTO計画JSONファイルではありません。');
@@ -87,26 +94,47 @@ export const Header: React.FC<HeaderProps> = ({
             const yearIdx = header.findIndex((h) => h.includes('年次') || h.includes('year'));
             const qIdx = header.findIndex((h) => h.includes('クォーター') || h.includes('quarter') || h.includes('Q'));
             const gradeIdx = header.findIndex((h) => h.includes('成績') || h.includes('評価') || h.includes('grade'));
+            const keepIdx = header.findIndex((h) => h.includes('キープ') || h.includes('favorite') || h.includes('keep'));
 
             if (subjectIdx !== -1) {
               const newPlan: any[] = [];
+              const importedFavs: string[] = [];
+
               for (let i = 1; i < lines.length; i++) {
                 const cols = lines[i].split(',').map((c) => c.replace(/^"|"$/g, '').trim());
                 const sName = cols[subjectIdx];
                 if (!sName) continue;
 
+                if (keepIdx !== -1 && cols[keepIdx]) {
+                  const keepVal = cols[keepIdx];
+                  if (keepVal.includes('★') || keepVal === '1' || keepVal.toLowerCase() === 'true' || keepVal.includes('キープ')) {
+                    importedFavs.push(sName);
+                  }
+                }
+
+                let isPlaced = true;
                 let yearVal: 1 | 2 | 3 | 4 = 1;
-                if (yearIdx !== -1 && cols[yearIdx]) {
+                if (yearIdx !== -1 && cols[yearIdx] && cols[yearIdx] !== '-') {
                   const yNum = parseInt(cols[yearIdx].replace(/[^0-9]/g, ''), 10);
-                  if (yNum >= 1 && yNum <= 4) yearVal = yNum as 1 | 2 | 3 | 4;
+                  if (yNum >= 1 && yNum <= 4) {
+                    yearVal = yNum as 1 | 2 | 3 | 4;
+                  } else {
+                    isPlaced = false;
+                  }
+                } else if (yearIdx !== -1 && cols[yearIdx] === '-') {
+                  isPlaced = false;
                 }
 
                 let qVal: '1Q' | '2Q' | '3Q' | '4Q' = '1Q';
-                if (qIdx !== -1 && cols[qIdx]) {
+                if (qIdx !== -1 && cols[qIdx] && cols[qIdx] !== '-') {
                   const rawQ = cols[qIdx];
                   if (['1Q', '2Q', '3Q', '4Q'].includes(rawQ)) {
                     qVal = rawQ as any;
+                  } else {
+                    isPlaced = false;
                   }
+                } else if (qIdx !== -1 && cols[qIdx] === '-') {
+                  isPlaced = false;
                 }
 
                 let gradeVal = '-';
@@ -114,18 +142,24 @@ export const Header: React.FC<HeaderProps> = ({
                   gradeVal = cols[gradeIdx];
                 }
 
-                newPlan.push({
-                  id: `${sName}-${yearVal}-${qVal}-${i}`,
-                  subjectName: sName,
-                  year: yearVal,
-                  quarter: qVal,
-                  grade: gradeVal,
-                });
+                if (isPlaced) {
+                  newPlan.push({
+                    id: `${sName}-${yearVal}-${qVal}-${i}`,
+                    subjectName: sName,
+                    year: yearVal,
+                    quarter: qVal,
+                    grade: gradeVal,
+                  });
+                }
               }
 
-              if (newPlan.length > 0) {
+              if (importedFavs.length > 0 && onImportFavorites) {
+                onImportFavorites(importedFavs);
+              }
+
+              if (newPlan.length > 0 || importedFavs.length > 0) {
                 setPlan(newPlan);
-                alert(`CSV計画ファイルから ${newPlan.length} 件の科目を正常に読み込みました。`);
+                alert(`CSVファイルから 計画:${newPlan.length}件、キープ:${importedFavs.length}件 を読み込みました。`);
               } else {
                 alert('CSVファイル内に有効な科目データが見つかりませんでした。');
               }

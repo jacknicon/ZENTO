@@ -296,69 +296,68 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
 
       {/* Expandable Filter Panel (Toggled by 絞り込み button) */}
       {isFilterPanelOpen && (
-        <div style={{ padding: '10px 12px', borderBottom: '1px solid #e2e8f0', background: '#f8fafc', flexShrink: 0, maxHeight: '240px', overflowY: 'auto' }}>
-          {/* 想定年次 & 開講クォーター */}
-          <div style={{ display: 'flex', gap: '12px', marginBottom: '6px', flexWrap: 'wrap' }}>
-            <div style={{ flex: 1, minWidth: '120px' }}>
-              <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>
-                想定年次
-              </div>
-              <div style={{ display: 'flex', gap: '4px', overflowX: 'auto', paddingBottom: '2px' }}>
-                {[1, 2, 3, 4].map((y) => {
-                  const isSelected = selectedYears.has(y);
-                  return (
-                    <button
-                      key={y}
-                      onClick={() => toggleSelection(selectedYears, y, setSelectedYears)}
-                      style={{
-                        fontSize: '0.68rem',
-                        padding: '2px 8px',
-                        fontWeight: 600,
-                        borderRadius: '14px',
-                        border: '1px solid',
-                        borderColor: isSelected ? '#4f46e5' : '#cbd5e1',
-                        background: isSelected ? '#4f46e5' : '#ffffff',
-                        color: isSelected ? '#ffffff' : '#475569',
-                        cursor: 'pointer',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      {y}年次
-                    </button>
-                  );
-                })}
-              </div>
+        <div style={{ padding: '10px 12px', borderBottom: '1px solid #e2e8f0', background: '#f8fafc', flexShrink: 0, maxHeight: '65vh', overflowY: 'auto' }}>
+          {/* 1. 想定年次 */}
+          <div style={{ marginBottom: '8px' }}>
+            <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>
+              想定年次
             </div>
+            <div style={{ display: 'flex', gap: '4px', overflowX: 'auto', paddingBottom: '2px' }}>
+              {[1, 2, 3, 4].map((y) => {
+                const isSelected = selectedYears.has(y);
+                return (
+                  <button
+                    key={y}
+                    onClick={() => toggleSelection(selectedYears, y, setSelectedYears)}
+                    style={{
+                      fontSize: '0.68rem',
+                      padding: '2px 8px',
+                      fontWeight: 600,
+                      borderRadius: '14px',
+                      border: '1px solid',
+                      borderColor: isSelected ? '#4f46e5' : '#cbd5e1',
+                      background: isSelected ? '#4f46e5' : '#ffffff',
+                      color: isSelected ? '#ffffff' : '#475569',
+                      cursor: 'pointer',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {y}年次
+                  </button>
+                );
+              })}
+            </div>
+          </div>
 
-            <div style={{ flex: 1, minWidth: '120px' }}>
-              <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>
-                開講クォーター
-              </div>
-              <div style={{ display: 'flex', gap: '4px', overflowX: 'auto', paddingBottom: '2px' }}>
-                {(['1Q', '2Q', '3Q', '4Q'] as const).map((q) => {
-                  const isSelected = selectedQuarters.has(q);
-                  return (
-                    <button
-                      key={q}
-                      onClick={() => toggleSelection(selectedQuarters, q, setSelectedQuarters)}
-                      style={{
-                        fontSize: '0.68rem',
-                        padding: '2px 8px',
-                        fontWeight: 600,
-                        borderRadius: '14px',
-                        border: '1px solid',
-                        borderColor: isSelected ? '#4f46e5' : '#cbd5e1',
-                        background: isSelected ? '#4f46e5' : '#ffffff',
-                        color: isSelected ? '#ffffff' : '#475569',
-                        cursor: 'pointer',
-                        whiteSpace: 'nowrap',
-                      }}
-                    >
-                      {q}
-                    </button>
-                  );
-                })}
-              </div>
+          {/* 2. 開講Q */}
+          <div style={{ marginBottom: '8px' }}>
+            <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>
+              開講Q
+            </div>
+            <div style={{ display: 'flex', gap: '4px', overflowX: 'auto', paddingBottom: '2px' }}>
+              {(['1Q', '2Q', '3Q', '4Q'] as const).map((q) => {
+                const isSelected = selectedQuarters.has(q);
+                return (
+                  <button
+                    key={q}
+                    onClick={() => toggleSelection(selectedQuarters, q, setSelectedQuarters)}
+                    style={{
+                      fontSize: '0.68rem',
+                      padding: '2px 8px',
+                      fontWeight: 600,
+                      borderRadius: '14px',
+                      border: '1px solid',
+                      borderColor: isSelected ? '#4f46e5' : '#cbd5e1',
+                      background: isSelected ? '#4f46e5' : '#ffffff',
+                      color: isSelected ? '#ffffff' : '#475569',
+                      cursor: 'pointer',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {q}
+                  </button>
+                );
+              })}
             </div>
           </div>
 
