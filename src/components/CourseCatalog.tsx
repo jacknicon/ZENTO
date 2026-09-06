@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Plus, Check, ChevronUp, ChevronDown, Filter, SlidersHorizontal } from 'lucide-react';
+import { Search, Plus, Check, ChevronUp, ChevronDown, Filter, SlidersHorizontal, Star } from 'lucide-react';
 import type { Course } from '../types/syllabus';
 import {
   getCourseCategoryStyle,
@@ -13,6 +13,8 @@ import {
 interface CourseCatalogProps {
   courses: Course[];
   plannedNames: Set<string>;
+  favoriteNames: Set<string>;
+  onToggleFavorite: (subjectName: string) => void;
   onSelectCourse: (course: Course) => void;
   onDragStartCourse: (e: React.DragEvent, course: Course) => void;
 }
@@ -20,6 +22,8 @@ interface CourseCatalogProps {
 export const CourseCatalog: React.FC<CourseCatalogProps> = ({
   courses,
   plannedNames,
+  favoriteNames,
+  onToggleFavorite,
   onSelectCourse,
   onDragStartCourse,
 }) => {
@@ -36,6 +40,7 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
   const [selectedEvals, setSelectedEvals] = useState<Set<string>>(new Set());
 
   const [unplannedOnly, setUnplannedOnly] = useState(false);
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
   const [sortBy] = useState<'year' | 'name' | 'credits'>('year');
 
   // Accordion Expand/Collapse State
@@ -65,7 +70,8 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
     selectedKubuns.size +
     selectedCategories.size +
     selectedMethods.size +
-    selectedEvals.size;
+    selectedEvals.size +
+    (favoritesOnly ? 1 : 0);
 
   const bunruiList: CourseBunrui[] = ['導入', '基礎', '展開', '卒業プロジェクト', '自由'];
 
@@ -92,6 +98,10 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
           const fieldMatch = c.学問分野名?.toLowerCase().includes(q);
           const summaryMatch = c.科目の概要?.toLowerCase().includes(q);
           if (!nameMatch && !teacherMatch && !fieldMatch && !summaryMatch) return false;
+        }
+
+        if (favoritesOnly && !favoriteNames.has(c.科目名)) {
+          return false;
         }
 
         if (selectedYears.size > 0) {
@@ -145,7 +155,7 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
         const getYearNum = (yStr?: string) => parseInt(yStr || '1') || 1;
         return getYearNum(a.履修想定年次) - getYearNum(b.履修想定年次);
       });
-  }, [courses, searchQuery, selectedYears, selectedKubuns, selectedCategories, selectedMethods, selectedEvals, unplannedOnly, sortBy, plannedNames]);
+  }, [courses, searchQuery, favoritesOnly, favoriteNames, selectedYears, selectedKubuns, selectedCategories, selectedMethods, selectedEvals, unplannedOnly, sortBy, plannedNames]);
 
   return (
     <aside
@@ -222,27 +232,53 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
           </button>
         </div>
 
-        {/* Sub-bar: Unplanned Toggle & Counter */}
+        {/* Sub-bar: Unplanned Toggle & Favorites Toggle & Counter */}
         <div className="flex-between" style={{ marginTop: '6px', paddingTop: '4px', borderTop: '1px dashed #f1f5f9' }}>
-          <button
-            onClick={() => setUnplannedOnly(!unplannedOnly)}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '3px',
-              padding: '2px 8px',
-              borderRadius: '12px',
-              border: '1px solid',
-              borderColor: unplannedOnly ? '#4f46e5' : '#cbd5e1',
-              background: unplannedOnly ? '#e0e7ff' : '#ffffff',
-              color: unplannedOnly ? '#3730a3' : '#64748b',
-              fontSize: '0.68rem',
-              fontWeight: 600,
-              cursor: 'pointer',
-            }}
-          >
-            <Filter size={10} /> 未配置のみ
-          </button>
+          <div style={{ display: 'flex', gap: '4px', alignItems: 'center' }}>
+            <button
+              onClick={() => setUnplannedOnly(!unplannedOnly)}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '3px',
+                padding: '2px 7px',
+                borderRadius: '12px',
+                border: '1px solid',
+                borderColor: unplannedOnly ? '#4f46e5' : '#cbd5e1',
+                background: unplannedOnly ? '#e0e7ff' : '#ffffff',
+                color: unplannedOnly ? '#3730a3' : '#64748b',
+                fontSize: '0.68rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+              }}
+            >
+              <Filter size={10} /> 未配置
+            </button>
+
+            <button
+              onClick={() => setFavoritesOnly(!favoritesOnly)}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '3px',
+                padding: '2px 7px',
+                borderRadius: '12px',
+                border: '1px solid',
+                borderColor: favoritesOnly ? '#d97706' : '#cbd5e1',
+                background: favoritesOnly ? '#fffbeb' : '#ffffff',
+                color: favoritesOnly ? '#b45309' : '#64748b',
+                fontSize: '0.68rem',
+                fontWeight: 600,
+                cursor: 'pointer',
+              }}
+            >
+              <Star size={11} fill={favoritesOnly ? '#f59e0b' : 'none'} color={favoritesOnly ? '#d97706' : '#94a3b8'} />
+              <span>キープ</span>
+              {favoriteNames.size > 0 && (
+                <span style={{ fontSize: '0.62rem', fontWeight: 800 }}>({favoriteNames.size})</span>
+              )}
+            </button>
+          </div>
 
           <span style={{ fontSize: '0.7rem', color: '#94a3b8', fontWeight: 600 }}>
             {filteredCourses.length}/{courses.length}科目
@@ -458,6 +494,7 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
         ) : (
           filteredCourses.map((course) => {
             const isPlaced = plannedNames.has(course.科目名);
+            const isFav = favoriteNames.has(course.科目名);
             const cardStyle = getCourseCategoryStyle(course, isPlaced);
 
             return (
@@ -480,46 +517,66 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
                   boxShadow: isPlaced ? 'none' : '0 1px 3px rgba(0,0,0,0.04)',
                 }}
               >
-                <div className="flex-between" style={{ alignItems: 'flex-start' }}>
-                  <div style={{ fontWeight: 700, fontSize: '0.8rem', color: isPlaced ? '#64748b' : '#0f172a', lineHeight: 1.3 }}>
+                <div className="flex-between" style={{ alignItems: 'flex-start', gap: '6px' }}>
+                  <div style={{ fontWeight: 700, fontSize: '0.8rem', color: isPlaced ? '#64748b' : '#0f172a', lineHeight: 1.3, flex: 1 }}>
                     {course.科目名}
                   </div>
-                  {isPlaced ? (
-                    <span
-                      style={{
-                        fontSize: '0.62rem',
-                        background: '#ecfdf5',
-                        color: '#047857',
-                        border: '1px solid #a7f3d0',
-                        padding: '1px 5px',
-                        borderRadius: '10px',
-                        fontWeight: 700,
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '2px',
-                        flexShrink: 0,
-                      }}
-                    >
-                      <Check size={9} /> 配置済
-                    </span>
-                  ) : (
+
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
                     <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onToggleFavorite(course.科目名);
+                      }}
                       style={{
                         border: 'none',
-                        background: cardStyle.badgeBg,
-                        color: cardStyle.badgeText,
-                        borderRadius: '6px',
-                        padding: '2px 6px',
-                        fontSize: '0.68rem',
-                        fontWeight: 700,
+                        background: 'transparent',
+                        padding: '2px',
                         cursor: 'pointer',
-                        flexShrink: 0,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                       }}
-                      title="履修計画に追加"
+                      title={isFav ? 'キープ解除' : '気になる科目にキープ'}
                     >
-                      <Plus size={11} />
+                      <Star size={14} fill={isFav ? '#f59e0b' : 'none'} color={isFav ? '#d97706' : '#94a3b8'} />
                     </button>
-                  )}
+
+                    {isPlaced ? (
+                      <span
+                        style={{
+                          fontSize: '0.62rem',
+                          background: '#ecfdf5',
+                          color: '#047857',
+                          border: '1px solid #a7f3d0',
+                          padding: '1px 5px',
+                          borderRadius: '10px',
+                          fontWeight: 700,
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '2px',
+                        }}
+                      >
+                        <Check size={9} /> 配置済
+                      </span>
+                    ) : (
+                      <button
+                        style={{
+                          border: 'none',
+                          background: cardStyle.badgeBg,
+                          color: cardStyle.badgeText,
+                          borderRadius: '6px',
+                          padding: '2px 6px',
+                          fontSize: '0.68rem',
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                        }}
+                        title="履修計画に追加"
+                      >
+                        <Plus size={11} />
+                      </button>
+                    )}
+                  </div>
                 </div>
 
                 <div

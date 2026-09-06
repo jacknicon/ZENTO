@@ -10,6 +10,7 @@ import {
   Share2,
   Menu,
   X,
+  HelpCircle,
 } from 'lucide-react';
 import type { GraduationSummary } from '../types/syllabus';
 import { exportPlanToCSV, generateSlackShareText } from '../utils/storage';
@@ -25,6 +26,7 @@ interface HeaderProps {
   onOpenGraphModal: () => void;
   onOpenPresetModal: () => void;
   onOpenAiModal: () => void;
+  onOpenUsageModal: () => void;
   showArrows: boolean;
   setShowArrows: (show: boolean) => void;
 }
@@ -39,6 +41,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenGraphModal,
   onOpenPresetModal,
   onOpenAiModal,
+  onOpenUsageModal,
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -159,6 +162,15 @@ export const Header: React.FC<HeaderProps> = ({
       {/* Desktop Header Action Buttons */}
       <div className="zento-header-actions-desktop">
         <button
+          onClick={onOpenUsageModal}
+          className="btn-zento btn-secondary"
+          title="ZENTOの使い方・ヘルプガイドを表示"
+        >
+          <HelpCircle size={16} color="#38bdf8" />
+          <span>使い方</span>
+        </button>
+
+        <button
           onClick={handleExportImage}
           className="btn-zento btn-accent"
           title="履修計画を高画質PNG画像としてダウンロード (成績情報はマスクして保存されます)"
@@ -230,6 +242,14 @@ export const Header: React.FC<HeaderProps> = ({
 
       {/* Mobile Header Bar Trigger Buttons */}
       <div className="zento-header-actions-mobile">
+        <button
+          onClick={onOpenUsageModal}
+          className="btn-zento btn-secondary btn-icon-only"
+          title="使い方ガイド"
+        >
+          <HelpCircle size={18} color="#38bdf8" />
+        </button>
+
         <button onClick={onOpenAiModal} className="btn-zento btn-primary btn-sm">
           <Sparkles size={15} />
           <span>AI相談</span>
@@ -256,6 +276,19 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
 
             <div className="mobile-menu-list">
+              <button
+                onClick={() => {
+                  onOpenUsageModal();
+                  setIsMobileMenuOpen(false);
+                }}
+                className="mobile-menu-item"
+              >
+                <HelpCircle size={18} color="#38bdf8" />
+                <div className="menu-text">
+                  <span className="title">ZENTO の使い方・ヘルプ</span>
+                  <span className="desc">計画の立て方や各種機能の解説</span>
+                </div>
+              </button>
               <button onClick={handleExportImage} className="mobile-menu-item accent">
                 <Camera size={18} />
                 <div className="menu-text">

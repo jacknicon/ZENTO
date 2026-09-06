@@ -17,6 +17,7 @@ import { QuarterPickerModal } from './components/QuarterPickerModal';
 import { DisclaimerModal } from './components/DisclaimerModal';
 import { PresetModelModal } from './components/PresetModelModal';
 import { AiConsultModal } from './components/AiConsultModal';
+import { UsageModal } from './components/UsageModal';
 import type { PresetModel } from './data/presetModels';
 
 import rawSyllabusData from './data/syllabus_data.json';
@@ -42,10 +43,36 @@ export const App: React.FC = () => {
   const [isGraphModalOpen, setIsGraphModalOpen] = useState(false);
   const [isPresetModalOpen, setIsPresetModalOpen] = useState(false);
   const [isAiModalOpen, setIsAiModalOpen] = useState(false);
+  const [isUsageModalOpen, setIsUsageModalOpen] = useState(false);
   const [mobileActiveTab, setMobileActiveTab] = useState<'timeline' | 'catalog' | 'dashboard'>('timeline');
   const [enrollmentTerm, setEnrollmentTerm] = useState<EnrollmentTerm>('spring');
   const [showArrows, setShowArrows] = useState(false);
   const [isDisclaimerAccepted, setIsDisclaimerAccepted] = useState(false);
+
+  const [favoriteNames, setFavoriteNames] = useState<Set<string>>(() => {
+    try {
+      const saved = localStorage.getItem('zento_favorites_v1');
+      if (saved) {
+        return new Set(JSON.parse(saved));
+      }
+    } catch (e) {}
+    return new Set();
+  });
+
+  const handleToggleFavorite = (subjectName: string) => {
+    setFavoriteNames((prev) => {
+      const next = new Set(prev);
+      if (next.has(subjectName)) {
+        next.delete(subjectName);
+      } else {
+        next.add(subjectName);
+      }
+      try {
+        localStorage.setItem('zento_favorites_v1', JSON.stringify(Array.from(next)));
+      } catch (e) {}
+      return next;
+    });
+  };
 
   useEffect(() => {
     const loaded = loadPlanFromLocalStorage();
@@ -178,6 +205,7 @@ export const App: React.FC = () => {
         onOpenGraphModal={() => setIsGraphModalOpen(true)}
         onOpenPresetModal={() => setIsPresetModalOpen(true)}
         onOpenAiModal={() => setIsAiModalOpen(true)}
+        onOpenUsageModal={() => setIsUsageModalOpen(true)}
         showArrows={showArrows}
         setShowArrows={setShowArrows}
       />
@@ -196,6 +224,8 @@ export const App: React.FC = () => {
           <CourseCatalog
             courses={courses}
             plannedNames={plannedNames}
+            favoriteNames={favoriteNames}
+            onToggleFavorite={handleToggleFavorite}
             onSelectCourse={handleSelectCourseFromCatalog}
             onDragStartCourse={(e, c) => e.dataTransfer.setData('text/plain', c.科目名)}
           />
@@ -298,6 +328,11 @@ export const App: React.FC = () => {
         setPlan={setPlan}
         summary={summary}
         coursesMap={coursesMap}
+      />
+
+      <UsageModal
+        isOpen={isUsageModalOpen}
+        onClose={() => setIsUsageModalOpen(false)}
       />
     </div>
   );
