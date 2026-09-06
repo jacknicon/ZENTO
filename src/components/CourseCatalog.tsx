@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Plus, Check, ChevronUp, ChevronDown, Filter } from 'lucide-react';
+import { Search, Plus, Check, ChevronUp, ChevronDown, Filter, SlidersHorizontal } from 'lucide-react';
 import type { Course } from '../types/syllabus';
 import {
   getCourseCategoryStyle,
@@ -25,6 +25,9 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
+  // Filter Panel Open/Close Toggle (Default closed on mobile/desktop for maximum card area)
+  const [isFilterPanelOpen, setIsFilterPanelOpen] = useState(false);
+
   // Filter Dimensions
   const [selectedYears, setSelectedYears] = useState<Set<number>>(new Set());
   const [selectedKubuns, setSelectedKubuns] = useState<Set<CourseKubun>>(new Set());
@@ -35,10 +38,10 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
   const [unplannedOnly, setUnplannedOnly] = useState(false);
   const [sortBy] = useState<'year' | 'name' | 'credits'>('year');
 
-  // Accordion Expand/Collapse State (Default collapsed on small screens for better catalog visibility)
+  // Accordion Expand/Collapse State
   const [accordions, setAccordions] = useState({
-    kubun: false,
-    bunrui: false,
+    kubun: true,
+    bunrui: true,
     method: false,
     eval: false,
   });
@@ -56,6 +59,13 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
     }
     setter(next);
   };
+
+  const activeFilterCount =
+    selectedYears.size +
+    selectedKubuns.size +
+    selectedCategories.size +
+    selectedMethods.size +
+    selectedEvals.size;
 
   const bunruiList: CourseBunrui[] = ['導入', '基礎', '展開', '卒業プロジェクト', '自由'];
 
@@ -149,229 +159,79 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
         overflow: 'hidden',
       }}
     >
-      {/* Search Header */}
-      <div style={{ padding: '10px 12px 6px 12px', background: '#ffffff', borderBottom: '1px solid #f1f5f9', flexShrink: 0 }}>
-        <div className="search-bar" style={{ position: 'relative' }}>
-          <Search size={14} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
-          <input
-            type="text"
-            placeholder="科目名・教員・キーワード検索..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+      {/* Compact Top Bar: Search Input + Filter Toggle Button */}
+      <div style={{ padding: '8px 10px', background: '#ffffff', borderBottom: '1px solid #e2e8f0', flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <div className="search-bar" style={{ position: 'relative', flex: 1 }}>
+            <Search size={14} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
+            <input
+              type="text"
+              placeholder="科目名・教員名検索..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              style={{
+                width: '100%',
+                paddingLeft: '28px',
+                paddingRight: '8px',
+                paddingTop: '5px',
+                paddingBottom: '5px',
+                fontSize: '0.78rem',
+                borderRadius: '6px',
+                border: '1px solid #cbd5e1',
+                outline: 'none',
+              }}
+            />
+          </div>
+
+          <button
+            onClick={() => setIsFilterPanelOpen(!isFilterPanelOpen)}
             style={{
-              width: '100%',
-              paddingLeft: '30px',
-              paddingRight: '10px',
-              paddingTop: '6px',
-              paddingBottom: '6px',
-              fontSize: '0.78rem',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '4px',
+              padding: '5px 8px',
               borderRadius: '6px',
-              border: '1px solid #cbd5e1',
-              outline: 'none',
+              border: '1px solid',
+              borderColor: activeFilterPanelOpenOrHasFilter(isFilterPanelOpen, activeFilterCount) ? '#4f46e5' : '#cbd5e1',
+              background: isFilterPanelOpen ? '#4f46e5' : activeFilterCount > 0 ? '#e0e7ff' : '#ffffff',
+              color: isFilterPanelOpen ? '#ffffff' : activeFilterCount > 0 ? '#3730a3' : '#475569',
+              fontSize: '0.72rem',
+              fontWeight: 700,
+              cursor: 'pointer',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
             }}
-          />
-        </div>
-      </div>
-
-      {/* Filter Chips & Accordions */}
-      <div style={{ padding: '8px 12px', borderBottom: '1px solid #e2e8f0', background: '#f8fafc', flexShrink: 0 }}>
-        {/* 想定年次 */}
-        <div style={{ marginBottom: '6px' }}>
-          <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>
-            想定年次
-          </div>
-          <div style={{ display: 'flex', gap: '4px', overflowX: 'auto', paddingBottom: '2px' }}>
-            {[1, 2, 3, 4].map((y) => {
-              const isSelected = selectedYears.has(y);
-              return (
-                <button
-                  key={y}
-                  onClick={() => toggleSelection(selectedYears, y, setSelectedYears)}
-                  style={{
-                    fontSize: '0.68rem',
-                    padding: '2px 8px',
-                    fontWeight: 600,
-                    borderRadius: '14px',
-                    border: '1px solid',
-                    borderColor: isSelected ? '#4f46e5' : '#cbd5e1',
-                    background: isSelected ? '#4f46e5' : '#ffffff',
-                    color: isSelected ? '#ffffff' : '#475569',
-                    cursor: 'pointer',
-                    whiteSpace: 'nowrap',
-                  }}
-                >
-                  {y}年次
-                </button>
-              );
-            })}
-          </div>
+          >
+            <SlidersHorizontal size={12} />
+            <span>絞り込み</span>
+            {activeFilterCount > 0 && (
+              <span
+                style={{
+                  background: isFilterPanelOpen ? '#ffffff' : '#4f46e5',
+                  color: isFilterPanelOpen ? '#4f46e5' : '#ffffff',
+                  borderRadius: '9999px',
+                  fontSize: '0.6rem',
+                  fontWeight: 800,
+                  padding: '0 5px',
+                  lineHeight: '1.2',
+                }}
+              >
+                {activeFilterCount}
+              </span>
+            )}
+          </button>
         </div>
 
-        {/* Accordions Container */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-          {/* 科目区分 */}
-          <div>
-            <div
-              onClick={() => toggleAccordion('kubun')}
-              className="flex-between"
-              style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', cursor: 'pointer', padding: '2px 0' }}
-            >
-              <span>科目区分 (色分け)</span>
-              {accordions.kubun ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
-            </div>
-            {accordions.kubun && (
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3px', marginTop: '3px' }}>
-                {COURSE_KUBUN_LIST.map((k) => {
-                  const isSelected = selectedKubuns.has(k);
-                  return (
-                    <button
-                      key={k}
-                      onClick={() => toggleSelection(selectedKubuns, k, setSelectedKubuns)}
-                      style={{
-                        fontSize: '0.66rem',
-                        padding: '2px 7px',
-                        borderRadius: '12px',
-                        border: '1px solid',
-                        borderColor: isSelected ? '#4f46e5' : '#cbd5e1',
-                        background: isSelected ? '#4f46e5' : '#ffffff',
-                        color: isSelected ? '#ffffff' : '#475569',
-                        fontWeight: 500,
-                        cursor: 'pointer',
-                      }}
-                    >
-                      {k}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-
-          {/* 科目分類 */}
-          <div>
-            <div
-              onClick={() => toggleAccordion('bunrui')}
-              className="flex-between"
-              style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', cursor: 'pointer', padding: '2px 0' }}
-            >
-              <span>科目分類 (バッジ)</span>
-              {accordions.bunrui ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
-            </div>
-            {accordions.bunrui && (
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3px', marginTop: '3px' }}>
-                {bunruiList.map((b) => {
-                  const isSelected = selectedCategories.has(b);
-                  return (
-                    <button
-                      key={b}
-                      onClick={() => toggleSelection(selectedCategories, b, setSelectedCategories)}
-                      style={{
-                        fontSize: '0.66rem',
-                        padding: '2px 7px',
-                        borderRadius: '12px',
-                        border: '1px solid',
-                        borderColor: isSelected ? '#4f46e5' : '#cbd5e1',
-                        background: isSelected ? '#4f46e5' : '#ffffff',
-                        color: isSelected ? '#ffffff' : '#475569',
-                        fontWeight: 500,
-                        cursor: 'pointer',
-                      }}
-                    >
-                      {b}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-
-          {/* 授業方法 */}
-          <div>
-            <div
-              onClick={() => toggleAccordion('method')}
-              className="flex-between"
-              style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', cursor: 'pointer', padding: '2px 0' }}
-            >
-              <span>授業方法</span>
-              {accordions.method ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
-            </div>
-            {accordions.method && (
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3px', marginTop: '3px' }}>
-                {methodsList.map((m) => {
-                  const isSelected = selectedMethods.has(m.value);
-                  return (
-                    <button
-                      key={m.value}
-                      onClick={() => toggleSelection(selectedMethods, m.value, setSelectedMethods)}
-                      style={{
-                        fontSize: '0.66rem',
-                        padding: '2px 8px',
-                        borderRadius: '12px',
-                        border: '1px solid',
-                        borderColor: isSelected ? '#4f46e5' : '#cbd5e1',
-                        background: isSelected ? '#4f46e5' : '#ffffff',
-                        color: isSelected ? '#ffffff' : '#475569',
-                        fontWeight: 500,
-                        cursor: 'pointer',
-                      }}
-                    >
-                      {m.label}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-
-          {/* 評価方法 */}
-          <div>
-            <div
-              onClick={() => toggleAccordion('eval')}
-              className="flex-between"
-              style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', cursor: 'pointer', padding: '2px 0' }}
-            >
-              <span>評価方法</span>
-              {accordions.eval ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
-            </div>
-            {accordions.eval && (
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3px', marginTop: '3px' }}>
-                {evalsList.map((ev) => {
-                  const isSelected = selectedEvals.has(ev.value);
-                  return (
-                    <button
-                      key={ev.value}
-                      onClick={() => toggleSelection(selectedEvals, ev.value, setSelectedEvals)}
-                      style={{
-                        fontSize: '0.66rem',
-                        padding: '2px 8px',
-                        borderRadius: '12px',
-                        border: '1px solid',
-                        borderColor: isSelected ? '#4f46e5' : '#cbd5e1',
-                        background: isSelected ? '#4f46e5' : '#ffffff',
-                        color: isSelected ? '#ffffff' : '#475569',
-                        fontWeight: 500,
-                        cursor: 'pointer',
-                      }}
-                    >
-                      {ev.label}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Bottom Bar: Unplanned Toggle & Counter */}
-        <div className="flex-between" style={{ paddingTop: '6px', borderTop: '1px solid #f1f5f9', marginTop: '4px' }}>
+        {/* Sub-bar: Unplanned Toggle & Counter */}
+        <div className="flex-between" style={{ marginTop: '6px', paddingTop: '4px', borderTop: '1px dashed #f1f5f9' }}>
           <button
             onClick={() => setUnplannedOnly(!unplannedOnly)}
             style={{
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '4px',
+              gap: '3px',
               padding: '2px 8px',
-              borderRadius: '14px',
+              borderRadius: '12px',
               border: '1px solid',
               borderColor: unplannedOnly ? '#4f46e5' : '#cbd5e1',
               background: unplannedOnly ? '#e0e7ff' : '#ffffff',
@@ -385,10 +245,202 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
           </button>
 
           <span style={{ fontSize: '0.7rem', color: '#94a3b8', fontWeight: 600 }}>
-            {filteredCourses.length}/{courses.length}
+            {filteredCourses.length}/{courses.length}科目
           </span>
         </div>
       </div>
+
+      {/* Expandable Filter Panel (Toggled by 絞り込み button) */}
+      {isFilterPanelOpen && (
+        <div style={{ padding: '10px 12px', borderBottom: '1px solid #e2e8f0', background: '#f8fafc', flexShrink: 0, maxHeight: '240px', overflowY: 'auto' }}>
+          {/* 想定年次 */}
+          <div style={{ marginBottom: '6px' }}>
+            <div style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', marginBottom: '4px' }}>
+              想定年次
+            </div>
+            <div style={{ display: 'flex', gap: '4px', overflowX: 'auto', paddingBottom: '2px' }}>
+              {[1, 2, 3, 4].map((y) => {
+                const isSelected = selectedYears.has(y);
+                return (
+                  <button
+                    key={y}
+                    onClick={() => toggleSelection(selectedYears, y, setSelectedYears)}
+                    style={{
+                      fontSize: '0.68rem',
+                      padding: '2px 8px',
+                      fontWeight: 600,
+                      borderRadius: '14px',
+                      border: '1px solid',
+                      borderColor: isSelected ? '#4f46e5' : '#cbd5e1',
+                      background: isSelected ? '#4f46e5' : '#ffffff',
+                      color: isSelected ? '#ffffff' : '#475569',
+                      cursor: 'pointer',
+                      whiteSpace: 'nowrap',
+                    }}
+                  >
+                    {y}年次
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Accordions Container */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            {/* 科目区分 */}
+            <div>
+              <div
+                onClick={() => toggleAccordion('kubun')}
+                className="flex-between"
+                style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', cursor: 'pointer', padding: '2px 0' }}
+              >
+                <span>科目区分 (色分け)</span>
+                {accordions.kubun ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+              </div>
+              {accordions.kubun && (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3px', marginTop: '3px' }}>
+                  {COURSE_KUBUN_LIST.map((k) => {
+                    const isSelected = selectedKubuns.has(k);
+                    return (
+                      <button
+                        key={k}
+                        onClick={() => toggleSelection(selectedKubuns, k, setSelectedKubuns)}
+                        style={{
+                          fontSize: '0.66rem',
+                          padding: '2px 7px',
+                          borderRadius: '12px',
+                          border: '1px solid',
+                          borderColor: isSelected ? '#4f46e5' : '#cbd5e1',
+                          background: isSelected ? '#4f46e5' : '#ffffff',
+                          color: isSelected ? '#ffffff' : '#475569',
+                          fontWeight: 500,
+                          cursor: 'pointer',
+                        }}
+                      >
+                        {k}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* 科目分類 */}
+            <div>
+              <div
+                onClick={() => toggleAccordion('bunrui')}
+                className="flex-between"
+                style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', cursor: 'pointer', padding: '2px 0' }}
+              >
+                <span>科目分類 (バッジ)</span>
+                {accordions.bunrui ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+              </div>
+              {accordions.bunrui && (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3px', marginTop: '3px' }}>
+                  {bunruiList.map((b) => {
+                    const isSelected = selectedCategories.has(b);
+                    return (
+                      <button
+                        key={b}
+                        onClick={() => toggleSelection(selectedCategories, b, setSelectedCategories)}
+                        style={{
+                          fontSize: '0.66rem',
+                          padding: '2px 7px',
+                          borderRadius: '12px',
+                          border: '1px solid',
+                          borderColor: isSelected ? '#4f46e5' : '#cbd5e1',
+                          background: isSelected ? '#4f46e5' : '#ffffff',
+                          color: isSelected ? '#ffffff' : '#475569',
+                          fontWeight: 500,
+                          cursor: 'pointer',
+                        }}
+                      >
+                        {b}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* 授業方法 */}
+            <div>
+              <div
+                onClick={() => toggleAccordion('method')}
+                className="flex-between"
+                style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', cursor: 'pointer', padding: '2px 0' }}
+              >
+                <span>授業方法</span>
+                {accordions.method ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+              </div>
+              {accordions.method && (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3px', marginTop: '3px' }}>
+                  {methodsList.map((m) => {
+                    const isSelected = selectedMethods.has(m.value);
+                    return (
+                      <button
+                        key={m.value}
+                        onClick={() => toggleSelection(selectedMethods, m.value, setSelectedMethods)}
+                        style={{
+                          fontSize: '0.66rem',
+                          padding: '2px 8px',
+                          borderRadius: '12px',
+                          border: '1px solid',
+                          borderColor: isSelected ? '#4f46e5' : '#cbd5e1',
+                          background: isSelected ? '#4f46e5' : '#ffffff',
+                          color: isSelected ? '#ffffff' : '#475569',
+                          fontWeight: 500,
+                          cursor: 'pointer',
+                        }}
+                      >
+                        {m.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            {/* 評価方法 */}
+            <div>
+              <div
+                onClick={() => toggleAccordion('eval')}
+                className="flex-between"
+                style={{ fontSize: '0.72rem', fontWeight: 700, color: '#64748b', cursor: 'pointer', padding: '2px 0' }}
+              >
+                <span>評価方法</span>
+                {accordions.eval ? <ChevronUp size={13} /> : <ChevronDown size={13} />}
+              </div>
+              {accordions.eval && (
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '3px', marginTop: '3px' }}>
+                  {evalsList.map((ev) => {
+                    const isSelected = selectedEvals.has(ev.value);
+                    return (
+                      <button
+                        key={ev.value}
+                        onClick={() => toggleSelection(selectedEvals, ev.value, setSelectedEvals)}
+                        style={{
+                          fontSize: '0.66rem',
+                          padding: '2px 8px',
+                          borderRadius: '12px',
+                          border: '1px solid',
+                          borderColor: isSelected ? '#4f46e5' : '#cbd5e1',
+                          background: isSelected ? '#4f46e5' : '#ffffff',
+                          color: isSelected ? '#ffffff' : '#475569',
+                          fontWeight: 500,
+                          cursor: 'pointer',
+                        }}
+                      >
+                        {ev.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Course Cards List Scrollable Area */}
       <div
@@ -520,3 +572,7 @@ export const CourseCatalog: React.FC<CourseCatalogProps> = ({
     </aside>
   );
 };
+
+function activeFilterPanelOpenOrHasFilter(isOpen: boolean, count: number): boolean {
+  return isOpen || count > 0;
+}
