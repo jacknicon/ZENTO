@@ -31,9 +31,12 @@ export const TimelineCanvas: React.FC<TimelineCanvasProps> = ({
   onDropCourseToSlot,
 }) => {
   const [dragOverCell, setDragOverCell] = useState<{ year: Year; quarter: Quarter } | null>(null);
+  const [selectedMobileYear, setSelectedMobileYear] = useState<Year | 'all'>('all');
 
   const years: Year[] = [1, 2, 3, 4];
   const quarters: Quarter[] = enrollmentTerm === 'spring' ? ['1Q', '2Q', '3Q', '4Q'] : ['3Q', '4Q', '1Q', '2Q'];
+
+  const displayedYears = selectedMobileYear === 'all' ? years : [selectedMobileYear];
 
   const handleDragOver = (e: React.DragEvent, year: Year, quarter: Quarter) => {
     e.preventDefault();
@@ -82,61 +85,62 @@ export const TimelineCanvas: React.FC<TimelineCanvasProps> = ({
 
   return (
     <main className="flex-col" style={{ flex: 1, background: '#f8fafc', overflowY: 'auto' }}>
+      {/* Top Bar for Control & Term selection */}
       <div
         className="flex-between"
         style={{
           background: '#ffffff',
           borderBottom: '1px solid #e2e8f0',
-          padding: '8px 16px',
+          padding: '8px 14px',
           fontSize: '0.8rem',
           flexWrap: 'wrap',
           gap: '8px',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <span style={{ fontWeight: 700, color: '#334155' }}>🎓 入学時期:</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ fontWeight: 700, color: '#334155', fontSize: '0.76rem' }}>入学時期:</span>
             <div style={{ display: 'flex', background: '#f1f5f9', borderRadius: '9999px', padding: '2px' }}>
               <button
                 onClick={() => setEnrollmentTerm('spring')}
                 style={{
                   border: 'none',
-                  padding: '4px 12px',
+                  padding: '3px 10px',
                   borderRadius: '9999px',
-                  fontSize: '0.76rem',
+                  fontSize: '0.74rem',
                   fontWeight: 600,
                   cursor: 'pointer',
                   background: enrollmentTerm === 'spring' ? '#4f46e5' : 'transparent',
                   color: enrollmentTerm === 'spring' ? '#ffffff' : '#64748b',
                 }}
               >
-                春学期 (1Q~)
+                春 (1Q~)
               </button>
               <button
                 onClick={() => setEnrollmentTerm('fall')}
                 style={{
                   border: 'none',
-                  padding: '4px 12px',
+                  padding: '3px 10px',
                   borderRadius: '9999px',
-                  fontSize: '0.76rem',
+                  fontSize: '0.74rem',
                   fontWeight: 600,
                   cursor: 'pointer',
                   background: enrollmentTerm === 'fall' ? '#4f46e5' : 'transparent',
                   color: enrollmentTerm === 'fall' ? '#ffffff' : '#64748b',
                 }}
               >
-                秋学期 (3Q~)
+                秋 (3Q~)
               </button>
             </div>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.76rem', color: '#475569' }}>
-            <span style={{ fontWeight: 700 }}>⚠️ CAP上限設定:</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '0.74rem', color: '#475569' }}>
+            <span style={{ fontWeight: 700 }}>CAP:</span>
             <select
               value={capLimit}
               onChange={(e) => setCapLimit(Number(e.target.value))}
               style={{
-                padding: '2px 8px',
+                padding: '2px 6px',
                 borderRadius: '6px',
                 border: '1px solid #cbd5e1',
                 fontSize: '0.74rem',
@@ -146,18 +150,37 @@ export const TimelineCanvas: React.FC<TimelineCanvasProps> = ({
                 cursor: 'pointer',
               }}
             >
-              <option value={10}>10単位 / Q</option>
-              <option value={12}>12単位 / Q (標準)</option>
-              <option value={14}>14単位 / Q</option>
-              <option value={16}>16単位 / Q</option>
+              <option value={10}>10単位</option>
+              <option value={12}>12単位(標準)</option>
+              <option value={14}>14単位</option>
+              <option value={16}>16単位</option>
             </select>
           </div>
         </div>
+
+        {/* Mobile Year Filter Tabs (Visible on mobile/tablets) */}
+        <div className="mobile-year-tabs">
+          <button
+            onClick={() => setSelectedMobileYear('all')}
+            className={`mobile-year-tab ${selectedMobileYear === 'all' ? 'active' : ''}`}
+          >
+            全年次
+          </button>
+          {years.map((y) => (
+            <button
+              key={y}
+              onClick={() => setSelectedMobileYear(y)}
+              className={`mobile-year-tab ${selectedMobileYear === y ? 'active' : ''}`}
+            >
+              {y}年次
+            </button>
+          ))}
+        </div>
       </div>
 
-      <div id="zento-timeline-board" style={{ flex: 1, padding: '16px', overflowX: 'auto' }}>
-        <div className="timeline-grid">
-          {years.map((year) => {
+      <div id="zento-timeline-board" style={{ flex: 1, padding: '12px', overflowX: 'auto' }}>
+        <div className="timeline-grid" style={{ gridTemplateColumns: `repeat(${displayedYears.length}, 1fr)` }}>
+          {displayedYears.map((year) => {
             const yearItems = plan.filter((p) => p.year === year);
             const uniqueSubjectNamesInYear = Array.from(new Set(yearItems.map((p) => p.subjectName)));
             const yearCredits = yearItems.reduce((sum, item) => sum + getItemPerQuarterCredits(item), 0);
@@ -221,9 +244,10 @@ export const TimelineCanvas: React.FC<TimelineCanvasProps> = ({
                             border: '1px dashed #e2e8f0',
                             borderRadius: '4px',
                             margin: '4px 0',
+                            minHeight: '40px',
                           }}
                         >
-                          ここにドロップ
+                          ここに配置
                         </div>
                       ) : (
                         itemsInSlot.map((item) => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Camera,
   Download,
@@ -8,6 +8,8 @@ import {
   ExternalLink,
   BookOpen,
   Share2,
+  Menu,
+  X,
 } from 'lucide-react';
 import type { GraduationSummary } from '../types/syllabus';
 import { exportPlanToCSV, generateSlackShareText } from '../utils/storage';
@@ -38,20 +40,23 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenPresetModal,
   onOpenAiModal,
 }) => {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   const handleExportImage = () => {
-    // Force grade masking by default (hideGrades = true)
     exportScheduleAsImage('zento-timeline-board', planTitle, true);
+    setIsMobileMenuOpen(false);
   };
 
   const handleSlackShareText = () => {
-    // Force grade masking by default (hideGrades = true)
     const text = generateSlackShareText(plan, summary, planTitle, true);
     navigator.clipboard.writeText(text);
     alert('履修状況の共有テキストをクリップボードにコピーしました！\n（※成績評価は非表示マスクされています）');
+    setIsMobileMenuOpen(false);
   };
 
   const handleExportCSV = () => {
     exportPlanToCSV(plan, coursesMap, planTitle);
+    setIsMobileMenuOpen(false);
   };
 
   const handleImportFile = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -129,44 +134,37 @@ export const Header: React.FC<HeaderProps> = ({
       } catch (err) {
         alert('ファイルの読み込み中にエラーが発生しました。');
       }
+      setIsMobileMenuOpen(false);
     };
     reader.readAsText(file);
   };
 
   return (
     <header className="zento-header">
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
         <div className="zento-logo">
           <span>ZENTO</span>
-          <span className="zento-logo-tag">ZEN大学 履修計画</span>
+          <span className="zento-logo-tag">ZEN大学</span>
         </div>
 
         <input
           type="text"
           value={planTitle}
           onChange={(e) => setPlanTitle(e.target.value)}
-          placeholder="プラン名を入力..."
-          style={{
-            border: '1px solid #334155',
-            background: '#1e293b',
-            color: '#ffffff',
-            borderRadius: '6px',
-            padding: '4px 10px',
-            fontSize: '0.82rem',
-            fontWeight: 600,
-            width: '150px',
-          }}
+          placeholder="プラン名..."
+          className="zento-header-input"
         />
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+      {/* Desktop Header Action Buttons */}
+      <div className="zento-header-actions-desktop">
         <button
           onClick={handleExportImage}
           className="btn-zento btn-accent"
           title="履修計画を高画質PNG画像としてダウンロード (成績情報はマスクして保存されます)"
         >
           <Camera size={16} />
-          <span>📷 履修登録を画像で保存</span>
+          <span>📷 画像で保存</span>
         </button>
 
         <button
@@ -205,7 +203,7 @@ export const Header: React.FC<HeaderProps> = ({
           <span>推奨モデル</span>
         </button>
 
-        <button onClick={handleExportCSV} className="btn-zento btn-secondary" title="CSVダウンロード (成績情報含む)">
+        <button onClick={handleExportCSV} className="btn-zento btn-secondary" title="CSVダウンロード">
           <Download size={15} />
           <span>CSV</span>
         </button>
@@ -225,12 +223,114 @@ export const Header: React.FC<HeaderProps> = ({
           title="ZEN大学公式シラバスサイトを開く"
         >
           <BookOpen size={15} color="#38bdf8" />
-          <span>公式シラバス</span>
+          <span>シラバス</span>
           <ExternalLink size={12} color="#94a3b8" />
         </a>
       </div>
+
+      {/* Mobile Header Bar Trigger Buttons */}
+      <div className="zento-header-actions-mobile">
+        <button onClick={onOpenAiModal} className="btn-zento btn-primary btn-sm">
+          <Sparkles size={15} />
+          <span>AI相談</span>
+        </button>
+
+        <button
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="btn-zento btn-secondary btn-icon-only"
+          aria-label="メニューを開く"
+        >
+          {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+        </button>
+      </div>
+
+      {/* Mobile Actions Drawer / Overlay Menu */}
+      {isMobileMenuOpen && (
+        <div className="zento-mobile-menu-overlay" onClick={() => setIsMobileMenuOpen(false)}>
+          <div className="zento-mobile-menu-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="mobile-menu-header">
+              <h3>メニュー・ツール</h3>
+              <button onClick={() => setIsMobileMenuOpen(false)} className="btn-close">
+                <X size={18} />
+              </button>
+            </div>
+
+            <div className="mobile-menu-list">
+              <button onClick={handleExportImage} className="mobile-menu-item accent">
+                <Camera size={18} />
+                <div className="menu-text">
+                  <span className="title">履修計画を画像で保存</span>
+                  <span className="desc">成績情報を非表示にして高画質PNG保存</span>
+                </div>
+              </button>
+
+              <button onClick={handleSlackShareText} className="mobile-menu-item">
+                <Share2 size={18} color="#38bdf8" />
+                <div className="menu-text">
+                  <span className="title">Slack共有用テキストコピー</span>
+                  <span className="desc">成績を含まない計画一覧をコピー</span>
+                </div>
+              </button>
+
+              <button
+                onClick={() => {
+                  onOpenGraphModal();
+                  setIsMobileMenuOpen(false);
+                }}
+                className="mobile-menu-item"
+              >
+                <Network size={18} color="#818cf8" />
+                <div className="menu-text">
+                  <span className="title">履修系統図 (ネットワーク)</span>
+                  <span className="desc">全279科目の前提関係ノードを表示</span>
+                </div>
+              </button>
+
+              <button
+                onClick={() => {
+                  onOpenPresetModal();
+                  setIsMobileMenuOpen(false);
+                }}
+                className="mobile-menu-item"
+              >
+                <Sparkles size={18} color="#10b981" />
+                <div className="menu-text">
+                  <span className="title">推奨履修モデル</span>
+                  <span className="desc">大学公式モデルを1クリック反映</span>
+                </div>
+              </button>
+
+              <div className="mobile-menu-row">
+                <button onClick={handleExportCSV} className="mobile-menu-subitem">
+                  <Download size={16} />
+                  <span>CSV保存</span>
+                </button>
+
+                <label className="mobile-menu-subitem" style={{ cursor: 'pointer' }}>
+                  <Upload size={16} />
+                  <span>JSON/CSV読込</span>
+                  <input type="file" accept=".json,.csv" onChange={handleImportFile} style={{ display: 'none' }} />
+                </label>
+              </div>
+
+              <a
+                href="https://syllabus.zen.ac.jp/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mobile-menu-item"
+                style={{ textDecoration: 'none' }}
+              >
+                <BookOpen size={18} color="#38bdf8" />
+                <div className="menu-text">
+                  <span className="title">ZEN大学 公式シラバス</span>
+                  <span className="desc">外部シラバス検索サイトを開く</span>
+                </div>
+                <ExternalLink size={14} color="#94a3b8" />
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 };
-
-
