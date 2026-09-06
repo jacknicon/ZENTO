@@ -64,6 +64,14 @@ npm run build
 
 ---
 
+## 🙏 謝意 / 参考 (Credits)
+
+本アプリケーションの開発にあたり、先行して公開されている以下の素晴らしいオープンソースプロジェクトおよびデータを参考にさせていただきました。開発者様に心より感謝申し上げます。
+
+- [ZEN大学 履修計画プランナー by sifue](https://github.com/sifue/zen-course-planner) (MIT License)
+
+---
+
 ## 📄 ライセンス
 
 [MIT License](./LICENSE) のもとで公開されています。商用利用・改変・再配布が可能です。
