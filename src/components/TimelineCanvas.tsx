@@ -17,6 +17,9 @@ interface TimelineCanvasProps {
   enrollmentTerm: EnrollmentTerm;
   setEnrollmentTerm: (term: EnrollmentTerm) => void;
   onDropCourseToSlot: (subjectName: string, year: Year, quarter: Quarter) => void;
+  maxYear: number;
+  onAddYear: () => void;
+  onRemoveYear: (year: number) => void;
 }
 
 export const TimelineCanvas: React.FC<TimelineCanvasProps> = ({
@@ -29,13 +32,16 @@ export const TimelineCanvas: React.FC<TimelineCanvasProps> = ({
   enrollmentTerm,
   setEnrollmentTerm,
   onDropCourseToSlot,
+  maxYear,
+  onAddYear,
+  onRemoveYear,
 }) => {
   const [dragOverCell, setDragOverCell] = useState<{ year: Year; quarter: Quarter } | null>(null);
   const [selectedMobileYear, setSelectedMobileYear] = useState<Year | 'all'>(
     typeof window !== 'undefined' && window.innerWidth < 768 ? 1 : 'all'
   );
 
-  const years: Year[] = [1, 2, 3, 4];
+  const years: Year[] = Array.from({ length: maxYear }, (_, i) => (i + 1) as Year);
   const quarters: Quarter[] = enrollmentTerm === 'spring' ? ['1Q', '2Q', '3Q', '4Q'] : ['3Q', '4Q', '1Q', '2Q'];
 
   const displayedYears = selectedMobileYear === 'all' ? years : [selectedMobileYear];
@@ -158,6 +164,28 @@ export const TimelineCanvas: React.FC<TimelineCanvasProps> = ({
               <option value={16}>16単位</option>
             </select>
           </div>
+
+          {maxYear < 8 && (
+            <button
+              onClick={onAddYear}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '3px',
+                background: '#e0e7ff',
+                color: '#4338ca',
+                border: '1px solid #c7d2fe',
+                borderRadius: '6px',
+                padding: '2px 8px',
+                fontSize: '0.72rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+              }}
+              title="長期履修・5年次以降の計画枠を追加します (最大8年次)"
+            >
+              <span>＋ {maxYear + 1}年次を追加</span>
+            </button>
+          )}
         </div>
 
         {/* Mobile Year Filter Tabs */}
@@ -181,7 +209,13 @@ export const TimelineCanvas: React.FC<TimelineCanvasProps> = ({
       </div>
 
       <div id="zento-timeline-board" style={{ flex: 1, padding: '8px', overflowX: 'auto' }}>
-        <div className="timeline-grid" style={{ gridTemplateColumns: `repeat(${displayedYears.length}, 1fr)` }}>
+        <div
+          className="timeline-grid"
+          style={{
+            gridTemplateColumns: `repeat(${displayedYears.length}, minmax(210px, 1fr))`,
+            minWidth: displayedYears.length === 1 ? '100%' : `${Math.max(840, displayedYears.length * 210)}px`,
+          }}
+        >
           {displayedYears.map((year) => {
             const yearItems = plan.filter((p) => p.year === year);
             const uniqueSubjectNamesInYear = Array.from(new Set(yearItems.map((p) => p.subjectName)));
@@ -189,8 +223,31 @@ export const TimelineCanvas: React.FC<TimelineCanvasProps> = ({
 
             return (
               <div key={year} className="timeline-year-column">
-                <div className="timeline-year-header">
-                  <span>{year}年次</span>
+                <div className="timeline-year-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                    <span>{year}年次</span>
+                    {year > 4 && year === maxYear && yearItems.length === 0 && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onRemoveYear(year);
+                        }}
+                        style={{
+                          background: 'rgba(239, 68, 68, 0.15)',
+                          border: '1px solid rgba(239, 68, 68, 0.4)',
+                          color: '#fca5a5',
+                          borderRadius: '4px',
+                          padding: '1px 5px',
+                          fontSize: '0.62rem',
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                        }}
+                        title={`${year}年次を削除`}
+                      >
+                        ✕ 削除
+                      </button>
+                    )}
+                  </div>
                   <span style={{ fontSize: '0.72rem', opacity: 0.85, fontWeight: 500 }}>
                     計 {yearCredits} 単位 ({uniqueSubjectNamesInYear.length}科目)
                   </span>

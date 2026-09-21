@@ -6,6 +6,7 @@ export type CourseKubun =
   | '導入'
   | '数理'
   | '情報'
+  | '多言語情報理解'
   | '多言語理解'
   | '文化・思想'
   | '社会ネットワーク'
@@ -19,7 +20,7 @@ export const COURSE_KUBUN_LIST: CourseKubun[] = [
   '導入',
   '数理',
   '情報',
-  '多言語理解',
+  '多言語情報理解',
   '文化・思想',
   '社会ネットワーク',
   '経済・マーケット',
@@ -78,14 +79,43 @@ export function getCourseKubun(course: Course): CourseKubun {
   if (kubun.includes('導入') || bunrui.includes('導入') || name.includes('導入')) return '導入';
   if (kubun.includes('卒業') || bunrui.includes('卒業') || name.includes('プロジェクト実践')) return '卒業プロジェクト';
 
-  if (domain.includes('数理') || name.includes('数理') || name.includes('数学') || name.includes('統計') || name.includes('幾何') || name.includes('代数') || name.includes('解析') || name.includes('ガロア')) return '数理';
-  if (domain.includes('情報') || name.includes('情報') || name.includes('プログラミング') || name.includes('データ') || name.includes('アルゴリズム') || name.includes('AI')) return '情報';
-  if (domain.includes('多言語') || bunrui.includes('多言語') || domain.includes('言語') || name.includes('英語') || name.includes('多言語')) return '多言語理解';
-  if (domain.includes('文化') || domain.includes('思想') || name.includes('文化') || name.includes('思想') || name.includes('歴史') || name.includes('哲学')) return '文化・思想';
-  if (domain.includes('ネットワーク') || domain.includes('社会・ネットワーク') || name.includes('社会ネットワーク') || name.includes('コミュニティ')) return '社会ネットワーク';
-  if (domain.includes('経済') || domain.includes('マーケット') || name.includes('経済') || name.includes('マーケ')) return '経済・マーケット';
-  if (domain.includes('デジタル') || domain.includes('産業') || name.includes('デジタル') || name.includes('ビジネス')) return 'デジタル産業';
-  if (domain.includes('社会接続') || bunrui.includes('社会接続') || name.includes('社会接続')) return '社会接続';
+  // 1. 公式のシラバス「学問分野名」を直接マッピング (曖昧なキーワード判定による誤分類を解消)
+  switch (domain) {
+    case '多言語情報理解':
+      return '多言語情報理解';
+    case '数理':
+      return '数理';
+    case '情報':
+      return '情報';
+    case '文化・思想':
+      return '文化・思想';
+    case '社会・ネットワーク':
+      return '社会ネットワーク';
+    case '経済・マーケット':
+      return '経済・マーケット';
+    case 'デジタル産業':
+      return 'デジタル産業';
+    case '社会接続':
+      return '社会接続';
+    case '自由科目':
+      return '自由科目';
+    case '導入':
+      return '導入';
+    case '卒業プロジェクト':
+      return '卒業プロジェクト';
+    case 'その他':
+      return '自由科目';
+  }
+
+  // 2. 学問分野名が特殊または空の場合のフォールバック
+  if (domain.includes('多言語') || bunrui.includes('多言語')) return '多言語情報理解';
+  if (domain.includes('数理')) return '数理';
+  if (domain.includes('情報')) return '情報';
+  if (domain.includes('文化') || domain.includes('思想')) return '文化・思想';
+  if (domain.includes('ネットワーク') || domain.includes('社会・ネットワーク')) return '社会ネットワーク';
+  if (domain.includes('経済') || domain.includes('マーケット')) return '経済・マーケット';
+  if (domain.includes('デジタル') || domain.includes('産業')) return 'デジタル産業';
+  if (domain.includes('社会接続') || bunrui.includes('社会接続')) return '社会接続';
 
   if (bunrui.includes('自由') || kubun.includes('自由') || name.includes('イラストと')) return '自由科目';
 
@@ -146,6 +176,7 @@ export function getCourseCategoryStyle(course: Course, isPlaced: boolean = false
         badgeText: '#0891b2',
         stripeColor: '#06b6d4',
       };
+    case '多言語情報理解':
     case '多言語理解':
       return {
         label,

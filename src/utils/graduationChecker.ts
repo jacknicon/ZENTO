@@ -48,7 +48,9 @@ export function calculateGraduationRequirements(
       .reduce((sum, c) => sum + c.単位数, 0);
 
   const mathBaseCredits = getFieldCredits(['数理']);
-  const infoBaseCredits = getFieldCredits(['情報']);
+  const infoBaseCredits = plannedCourses
+    .filter((c) => (c.科目区分 === '基礎科目' || c.科目分類 === '基盤リテラシー科目') && c.学問分野名 === '情報')
+    .reduce((sum, c) => sum + c.単位数, 0);
   const cultureBaseCredits = getFieldCredits(['文化', '思想']);
   const socialBaseCredits = getFieldCredits(['社会', 'ネットワーク', 'NW']);
   const ecoBaseCredits = getFieldCredits(['経済', 'マーケット']);
@@ -62,11 +64,11 @@ export function calculateGraduationRequirements(
   const expandTotalCredits = expandTotalCreditsRaw - socialConnExcess;
 
   const baseLiteracyCredits = plannedCourses
-    .filter((c) => ['情報', '数理'].some((f) => c.学問分野名?.includes(f) || c.科目分類?.includes(f)))
+    .filter((c) => ['情報', '数理'].some((f) => c.学問分野名 === f || c.科目分類?.includes(f)))
     .reduce((sum, c) => sum + c.単位数, 0);
 
   const langCredits = plannedCourses
-    .filter((c) => c.学問分野名?.includes('言語') || c.科目分類?.includes('多言語') || c.科目名.includes('多言語'))
+    .filter((c) => c.学問分野名 === '多言語情報理解' || c.科目分類 === '多言語情報理解科目' || c.科目名.includes('多言語') || c.科目名.includes('機械翻訳'))
     .reduce((sum, c) => sum + c.単位数, 0);
 
   const globalCredits = plannedCourses

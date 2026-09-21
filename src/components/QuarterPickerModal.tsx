@@ -7,16 +7,20 @@ interface QuarterPickerModalProps {
   course: Course | null;
   onClose: () => void;
   onSelectSlot: (year: Year, quarter: Quarter) => void;
+  maxYear?: number;
+  onAddYear?: () => void;
 }
 
 export const QuarterPickerModal: React.FC<QuarterPickerModalProps> = ({
   course,
   onClose,
   onSelectSlot,
+  maxYear = 4,
+  onAddYear,
 }) => {
   if (!course) return null;
 
-  const years: Year[] = [1, 2, 3, 4];
+  const years: Year[] = Array.from({ length: maxYear }, (_, i) => (i + 1) as Year);
   const quarters: Quarter[] = ['1Q', '2Q', '3Q', '4Q'];
 
   return (
@@ -41,6 +45,8 @@ export const QuarterPickerModal: React.FC<QuarterPickerModalProps> = ({
           borderTopRightRadius: '20px',
           padding: '20px',
           boxShadow: '0 -10px 25px rgba(0,0,0,0.15)',
+          maxHeight: '85vh',
+          overflowY: 'auto',
         }}
       >
         <div className="flex-between" style={{ marginBottom: '16px' }}>
@@ -97,6 +103,24 @@ export const QuarterPickerModal: React.FC<QuarterPickerModalProps> = ({
               </div>
             </div>
           ))}
+
+          {onAddYear && maxYear < 8 && (
+            <button
+              onClick={() => onAddYear()}
+              style={{
+                background: '#eef2ff',
+                border: '1px dashed #6366f1',
+                borderRadius: '8px',
+                padding: '10px',
+                color: '#4f46e5',
+                fontSize: '0.78rem',
+                fontWeight: 700,
+                cursor: 'pointer',
+              }}
+            >
+              ＋ {maxYear + 1}年次を追加して配置枠を広げる (最大8年次)
+            </button>
+          )}
         </div>
       </div>
     </div>

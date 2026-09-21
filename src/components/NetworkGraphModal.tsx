@@ -45,6 +45,7 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
     { label: '導入', value: '導入' },
     { label: '数理', value: '数理' },
     { label: '情報', value: '情報' },
+    { label: '多言語情報理解', value: '多言語情報理解' },
     { label: '文化・思想', value: '文化' },
     { label: '社会・ネットワーク', value: '社会' },
     { label: '経済・マーケット', value: '経済' },
@@ -125,9 +126,19 @@ export const NetworkGraphModal: React.FC<NetworkGraphModalProps> = ({
       targetCourseNames.forEach((name) => {
         const c = coursesMap.get(name);
         if (c) {
-          const domainStr = [c.学問分野名, c.科目分類, c.科目区分].filter(Boolean).join(' ');
-          if (domainStr.includes(selectedDomain)) {
-            filtered.add(name);
+          if (selectedDomain === '多言語情報理解') {
+            if (c.学問分野名 === '多言語情報理解' || c.科目分類 === '多言語情報理解科目') {
+              filtered.add(name);
+            }
+          } else if (selectedDomain === '情報') {
+            if (c.学問分野名 === '情報' || (c.学問分野名 !== '多言語情報理解' && (c.科目分類?.includes('情報') || c.科目区分?.includes('情報')))) {
+              filtered.add(name);
+            }
+          } else {
+            const domainStr = [c.学問分野名, c.科目分類, c.科目区分].filter(Boolean).join(' ');
+            if (domainStr.includes(selectedDomain)) {
+              filtered.add(name);
+            }
           }
         }
       });

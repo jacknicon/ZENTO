@@ -174,13 +174,12 @@ export function calculateGpaSummary(
 ): GpaSummary {
   const cumulative = calculateGpaForItems(plan, coursesMap);
 
-  const years: Year[] = [1, 2, 3, 4];
-  const annual: Record<Year, GpaResult> = {
-    1: calculateGpaForItems(plan.filter((p) => p.year === 1), coursesMap),
-    2: calculateGpaForItems(plan.filter((p) => p.year === 2), coursesMap),
-    3: calculateGpaForItems(plan.filter((p) => p.year === 3), coursesMap),
-    4: calculateGpaForItems(plan.filter((p) => p.year === 4), coursesMap),
-  };
+  const maxYear = plan.reduce((max, p) => Math.max(max, p.year), 4);
+  const years: Year[] = Array.from({ length: maxYear }, (_, i) => i + 1);
+  const annual: Record<Year, GpaResult> = {};
+  years.forEach((y) => {
+    annual[y] = calculateGpaForItems(plan.filter((p) => p.year === y), coursesMap);
+  });
 
   const quarters: Quarter[] = ['1Q', '2Q', '3Q', '4Q'];
   const quarterly: Record<string, GpaResult> = {};

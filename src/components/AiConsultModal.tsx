@@ -39,7 +39,7 @@ export const AiConsultModal: React.FC<AiConsultModalProps> = ({
     if (!importText.trim()) return [];
     const lines = importText.split(/\r?\n/);
     const items: Array<{
-      year: 1 | 2 | 3 | 4;
+      year: number;
       quarter: '1Q' | '2Q' | '3Q' | '4Q';
       subjectId: string;
       rawSubjectName: string;
@@ -74,7 +74,7 @@ export const AiConsultModal: React.FC<AiConsultModalProps> = ({
         continue;
       }
 
-      const yearNum = Math.min(4, Math.max(1, parseInt(rawYear.replace(/[^1-4]/g, ''), 10) || 1)) as 1 | 2 | 3 | 4;
+      const yearNum = Math.min(8, Math.max(1, parseInt(rawYear.replace(/[^1-8]/g, ''), 10) || 1));
       let quarterStr: '1Q' | '2Q' | '3Q' | '4Q' = '1Q';
       if (rawQ.includes('2Q')) quarterStr = '2Q';
       else if (rawQ.includes('3Q')) quarterStr = '3Q';

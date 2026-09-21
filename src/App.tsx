@@ -55,9 +55,35 @@ export const App: React.FC = () => {
       if (saved) {
         return new Set(JSON.parse(saved));
       }
-    } catch (e) {}
+    } catch {}
     return new Set();
   });
+
+  const [maxYear, setMaxYear] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem('zento_max_year_v1');
+      if (saved) {
+        const val = parseInt(saved, 10);
+        if (!isNaN(val) && val >= 4 && val <= 8) return val;
+      }
+    } catch {}
+    return 4;
+  });
+
+  const handleAddYear = () => {
+    setMaxYear((prev) => Math.min(8, prev + 1));
+  };
+
+  const handleRemoveYear = (yearToRemove: number) => {
+    const itemsInYear = plan.filter((p) => p.year === yearToRemove);
+    if (itemsInYear.length > 0) {
+      alert(`${yearToRemove}年次に配置されている科目（${itemsInYear.length}件）があります。年次を削除する前に科目を移動または削除してください。`);
+      return;
+    }
+    if (yearToRemove === maxYear && maxYear > 4) {
+      setMaxYear((prev) => prev - 1);
+    }
+  };
 
   const handleToggleFavorite = (subjectName: string) => {
     setFavoriteNames((prev) => {
@@ -69,7 +95,7 @@ export const App: React.FC = () => {
       }
       try {
         localStorage.setItem('zento_favorites_v1', JSON.stringify(Array.from(next)));
-      } catch (e) {}
+      } catch {}
       return next;
     });
   };
@@ -79,12 +105,20 @@ export const App: React.FC = () => {
     if (loaded && loaded.plan && loaded.plan.length > 0) {
       setPlan(loaded.plan);
       setPlanTitle(loaded.title || 'マイ履修計画');
+      const planMaxYear = loaded.plan.reduce((max, p) => Math.max(max, p.year), 4);
+      setMaxYear((prev) => Math.min(8, Math.max(prev, planMaxYear)));
     }
   }, []);
 
   useEffect(() => {
     savePlanToLocalStorage(plan, planTitle);
   }, [plan, planTitle]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('zento_max_year_v1', String(maxYear));
+    } catch {}
+  }, [maxYear]);
 
   const plannedNames = useMemo(() => {
     return new Set(plan.map((p) => p.subjectName));
@@ -193,7 +227,7 @@ export const App: React.FC = () => {
       const next = new Set([...Array.from(prev), ...names]);
       try {
         localStorage.setItem('zento_favorites_v1', JSON.stringify(Array.from(next)));
-      } catch (e) {}
+      } catch {}
       return next;
     });
   };
@@ -265,6 +299,9 @@ export const App: React.FC = () => {
             enrollmentTerm={enrollmentTerm}
             setEnrollmentTerm={setEnrollmentTerm}
             onDropCourseToSlot={handleDropCourseToSlot}
+            maxYear={maxYear}
+            onAddYear={handleAddYear}
+            onRemoveYear={handleRemoveYear}
           />
         </div>
 
@@ -278,7 +315,12 @@ export const App: React.FC = () => {
           }}
           className="zento-sidebar-right"
         >
-          <GraduationDashboard summary={summary} gpaSummary={gpaSummary} planItemCount={plan.length} />
+          <GraduationDashboard
+            summary={summary}
+            gpaSummary={gpaSummary}
+            planItemCount={plan.length}
+            maxYear={maxYear}
+          />
         </div>
       </div>
 
@@ -314,6 +356,8 @@ export const App: React.FC = () => {
             handleDropCourseToSlot(pickerCourse.科目名, y, q);
           }
         }}
+        maxYear={maxYear}
+        onAddYear={handleAddYear}
       />
 
       <PresetModelModal

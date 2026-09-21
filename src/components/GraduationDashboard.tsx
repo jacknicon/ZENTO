@@ -6,9 +6,15 @@ interface GraduationDashboardProps {
   summary: GraduationSummary;
   gpaSummary: GpaSummary;
   planItemCount: number;
+  maxYear?: number;
 }
 
-export const GraduationDashboard: React.FC<GraduationDashboardProps> = ({ summary, gpaSummary, planItemCount }) => {
+export const GraduationDashboard: React.FC<GraduationDashboardProps> = ({
+  summary,
+  gpaSummary,
+  planItemCount,
+  maxYear = 4,
+}) => {
   const [expandedCategories, setExpandedCategories] = useState<Record<string, boolean>>({
     基礎科目: true,
     展開科目: true,
@@ -22,7 +28,7 @@ export const GraduationDashboard: React.FC<GraduationDashboardProps> = ({ summar
     setExpandedCategories((prev) => ({ ...prev, [name]: !prev[name] }));
   };
 
-  const years: Year[] = [1, 2, 3, 4];
+  const years: Year[] = Array.from({ length: maxYear }, (_, i) => (i + 1) as Year);
   const quarters: Quarter[] = ['1Q', '2Q', '3Q', '4Q'];
 
   return (
@@ -147,7 +153,7 @@ export const GraduationDashboard: React.FC<GraduationDashboardProps> = ({ summar
               <div style={{ fontSize: '0.7rem', color: '#c7d2fe', fontWeight: 600, marginBottom: '6px' }}>年度別 GPA</div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6px' }}>
                 {years.map((y) => {
-                  const res = gpaSummary.annual[y];
+                  const res = gpaSummary.annual[y] || { gpa: 0, totalGp: 0, evaluatedCredits: 0, hasGrades: false };
                   return (
                     <div
                       key={y}
@@ -179,7 +185,7 @@ export const GraduationDashboard: React.FC<GraduationDashboardProps> = ({ summar
                 {years.map((y) =>
                   quarters.map((q) => {
                     const key = `${y}-${q}`;
-                    const res = gpaSummary.quarterly[key];
+                    const res = gpaSummary.quarterly[key] || { gpa: 0, totalGp: 0, evaluatedCredits: 0, hasGrades: false };
                     return (
                       <div
                         key={key}

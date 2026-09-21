@@ -1,4 +1,4 @@
-export type Year = 1 | 2 | 3 | 4;
+export type Year = number; // 1〜4年次に加え、5年次以降(最長8年次まで)の長期履修に対応
 export type Quarter = '1Q' | '2Q' | '3Q' | '4Q';
 
 export interface Course {
