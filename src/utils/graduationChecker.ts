@@ -117,10 +117,10 @@ export function calculateGraduationRequirements(
   if (baseTotalCredits < 12) {
     unsatisfiedItems.push(`基礎科目が不足しています (${baseTotalCredits}/12単位)`);
   }
-  if (mathBaseCredits < 2) unsatisfiedItems.push('基礎科目「演習・数理」分野が不足しています (0/2単位)');
-  if (infoBaseCredits < 2) unsatisfiedItems.push('基礎科目「情報リテラシー」分野が不足しています (0/2単位)');
-  if (cultureBaseCredits < 2) unsatisfiedItems.push('基礎科目「思考・判断(文化・思想)」分野が不足しています (0/2単位)');
-  if (socialBaseCredits < 2) unsatisfiedItems.push('基礎科目「社会・NW」分野が不足しています (0/2単位)');
+  if (mathBaseCredits < 2) unsatisfiedItems.push('基礎科目「数理」分野が不足しています (0/2単位)');
+  if (infoBaseCredits < 2) unsatisfiedItems.push('基礎科目「情報」分野が不足しています (0/2単位)');
+  if (cultureBaseCredits < 2) unsatisfiedItems.push('基礎科目「文化・思想」分野が不足しています (0/2単位)');
+  if (socialBaseCredits < 2) unsatisfiedItems.push('基礎科目「社会・ネットワーク」分野が不足しています (0/2単位)');
   if (ecoBaseCredits < 2) unsatisfiedItems.push('基礎科目「経済・マーケット」分野が不足しています (0/2単位)');
   if (!langCommPlaced) unsatisfiedItems.push('基礎必修「多言語ITコミュニケーション」が未配置です');
 
@@ -146,12 +146,32 @@ export function calculateGraduationRequirements(
     unsatisfiedItems.push('卒業プロジェクト必修「プロジェクト実践」(4単位)が未配置です');
   }
 
+  const introRequiredNames = [
+    'アカデミックリテラシー',
+    'ITリテラシー',
+    '人文社会入門',
+    'デジタルツールの使い方',
+    '経済入門',
+    '人工知能活用実践',
+    '現代社会と数学',
+  ];
+  const introSubCategories = introRequiredNames.map((name) => {
+    const isPlaced = plannedNames.has(name);
+    return {
+      name,
+      current: isPlaced ? 2 : 0,
+      required: 2,
+      isSatisfied: isPlaced,
+    };
+  });
+
   const categories: CategoryProgress[] = [
     {
       name: '導入科目',
       current: introCredits,
       required: 14,
       isSatisfied: introCredits >= 14,
+      subCategories: introSubCategories,
     },
     {
       name: '基礎科目',
@@ -159,9 +179,9 @@ export function calculateGraduationRequirements(
       required: 12,
       isSatisfied: baseTotalCredits >= 12 && mathBaseCredits >= 2 && infoBaseCredits >= 2 && cultureBaseCredits >= 2 && socialBaseCredits >= 2 && ecoBaseCredits >= 2 && langCommPlaced,
       subCategories: [
-        { name: '演習・数理', current: Math.min(2, mathBaseCredits), required: 2, isSatisfied: mathBaseCredits >= 2 },
-        { name: '情報リテラシー', current: Math.min(2, infoBaseCredits), required: 2, isSatisfied: infoBaseCredits >= 2 },
-        { name: '思考・判断 (文化・思想)', current: Math.min(2, cultureBaseCredits), required: 2, isSatisfied: cultureBaseCredits >= 2 },
+        { name: '数理', current: Math.min(2, mathBaseCredits), required: 2, isSatisfied: mathBaseCredits >= 2 },
+        { name: '情報', current: Math.min(2, infoBaseCredits), required: 2, isSatisfied: infoBaseCredits >= 2 },
+        { name: '文化・思想', current: Math.min(2, cultureBaseCredits), required: 2, isSatisfied: cultureBaseCredits >= 2 },
         { name: '社会・ネットワーク', current: Math.min(2, socialBaseCredits), required: 2, isSatisfied: socialBaseCredits >= 2 },
         { name: '経済・マーケット', current: Math.min(2, ecoBaseCredits), required: 2, isSatisfied: ecoBaseCredits >= 2 },
         { name: '多言語ITコミュニケーション', current: langCommPlaced ? 2 : 0, required: 2, isSatisfied: langCommPlaced },
@@ -185,6 +205,14 @@ export function calculateGraduationRequirements(
       current: projectCredits,
       required: 4,
       isSatisfied: projectCredits >= 4 && projectPlaced,
+      subCategories: [
+        {
+          name: 'プロジェクト実践 (通年必修)',
+          current: projectPlaced ? 4 : 0,
+          required: 4,
+          isSatisfied: projectPlaced,
+        },
+      ],
       missingNotes: !projectPlaced ? ['「プロジェクト実践」の履修が必要です'] : [],
     },
   ];

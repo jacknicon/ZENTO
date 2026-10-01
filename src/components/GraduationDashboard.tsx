@@ -23,6 +23,7 @@ export const GraduationDashboard: React.FC<GraduationDashboardProps> = ({
   });
 
   const [gpaViewTab, setGpaViewTab] = useState<'cumulative' | 'annual' | 'quarterly'>('cumulative');
+  const [isUnsatisfiedExpanded, setIsUnsatisfiedExpanded] = useState(false);
 
   const toggleCategory = (name: string) => {
     setExpandedCategories((prev) => ({ ...prev, [name]: !prev[name] }));
@@ -61,7 +62,7 @@ export const GraduationDashboard: React.FC<GraduationDashboardProps> = ({
         </span>
       </div>
 
-      <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '14px' }}>
+      <div className="zento-dashboard-content" style={{ flex: 1, minHeight: 0, overflowY: 'auto' }}>
         {/* GPA Analysis Section */}
         <div
           style={{
@@ -236,15 +237,46 @@ export const GraduationDashboard: React.FC<GraduationDashboardProps> = ({
               <span>確認が必要な要件が {summary.unsatisfiedCount} 件あります</span>
             </div>
             <ul style={{ paddingLeft: '18px', fontSize: '0.74rem', color: '#92400e', lineHeight: 1.55 }}>
-              {summary.unsatisfiedItems.slice(0, 4).map((item, idx) => (
-                <li key={idx}>{item}</li>
+              {(isUnsatisfiedExpanded
+                ? summary.unsatisfiedItems
+                : summary.unsatisfiedItems.slice(0, 4)
+              ).map((item, idx) => (
+                <li key={idx} style={{ marginBottom: '2px' }}>{item}</li>
               ))}
-              {summary.unsatisfiedItems.length > 4 && (
-                <li style={{ fontStyle: 'italic', opacity: 0.85, marginTop: '2px' }}>
-                  他 {summary.unsatisfiedItems.length - 4} 件の未達...
-                </li>
-              )}
             </ul>
+            {summary.unsatisfiedItems.length > 4 && (
+              <button
+                onClick={() => setIsUnsatisfiedExpanded(!isUnsatisfiedExpanded)}
+                style={{
+                  marginTop: '8px',
+                  background: 'rgba(245, 158, 11, 0.15)',
+                  border: '1px solid #fde68a',
+                  borderRadius: '6px',
+                  padding: '5px 10px',
+                  fontSize: '0.72rem',
+                  fontWeight: 700,
+                  color: '#b45309',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '4px',
+                  width: '100%',
+                  justifyContent: 'center',
+                }}
+              >
+                {isUnsatisfiedExpanded ? (
+                  <>
+                    <span>閉じる</span>
+                    <ChevronDown size={13} style={{ transform: 'rotate(180deg)' }} />
+                  </>
+                ) : (
+                  <>
+                    <span>他 {summary.unsatisfiedItems.length - 4} 件の未達要件をすべて表示</span>
+                    <ChevronDown size={13} />
+                  </>
+                )}
+              </button>
+            )}
           </div>
         ) : (
           <div
@@ -385,15 +417,15 @@ export const GraduationDashboard: React.FC<GraduationDashboardProps> = ({
         <div style={{ lineHeight: 1.45, color: '#64748b' }}>
           ※ 最終的な確認は、学生便覧やZENPortal等の大学公式アナウンスを基にご自身で確認してください。
         </div>
-        <div style={{ display: 'flex', justifyContent: 'flex-end', paddingTop: '6px', borderTop: '1px dashed #cbd5e1' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px', paddingTop: '6px', borderTop: '1px dashed #cbd5e1', flexWrap: 'wrap' }}>
           <a
-            href="https://zen-student.slack.com/team/U08KGNB35L2"
+            href="https://github.com/jacknicon/ZENTO/issues/new?template=bug_report.md"
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              color: '#dc2626',
-              background: '#fef2f2',
-              border: '1px solid #fca5a5',
+              color: '#2563eb',
+              background: '#eff6ff',
+              border: '1px solid #bfdbfe',
               borderRadius: '6px',
               padding: '4px 10px',
               fontSize: '0.74rem',
@@ -405,9 +437,35 @@ export const GraduationDashboard: React.FC<GraduationDashboardProps> = ({
               transition: 'all 0.15s ease',
             }}
           >
-            <Bug size={13} color="#ef4444" />
+            <Bug size={13} color="#3b82f6" />
+            <span>不具合報告 (GitHub)</span>
+            <ExternalLink size={11} color="#60a5fa" />
+          </a>
+          <a
+            href="slack://user?id=U08KGNB35L2"
+            onClick={() => {
+              setTimeout(() => {
+                window.open('https://zen-student.slack.com/team/U08KGNB35L2', '_blank');
+              }, 1200);
+            }}
+            style={{
+              color: '#4a154b',
+              background: '#fdf2f8',
+              border: '1px solid #fbcfe8',
+              borderRadius: '6px',
+              padding: '4px 10px',
+              fontSize: '0.74rem',
+              fontWeight: 700,
+              textDecoration: 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '4px',
+              transition: 'all 0.15s ease',
+            }}
+          >
+            <Bug size={13} color="#db2777" />
             <span>不具合報告 (Slack)</span>
-            <ExternalLink size={11} color="#f87171" />
+            <ExternalLink size={11} color="#f472b6" />
           </a>
         </div>
       </div>

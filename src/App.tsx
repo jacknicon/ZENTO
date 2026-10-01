@@ -49,6 +49,21 @@ export const App: React.FC = () => {
   const [showArrows, setShowArrows] = useState(false);
   const [isDisclaimerAccepted, setIsDisclaimerAccepted] = useState(false);
 
+  const [isMobile, setIsMobile] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth <= 768;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const [favoriteNames, setFavoriteNames] = useState<Set<string>>(() => {
     try {
       const saved = localStorage.getItem('zento_favorites_v1');
@@ -209,7 +224,7 @@ export const App: React.FC = () => {
   };
 
   const handleSelectCourseFromCatalog = (course: Course) => {
-    if (window.innerWidth < 1024) {
+    if (isMobile) {
       setPickerCourse(course);
     } else {
       setSelectedSubjectName(course.科目名);
@@ -259,7 +274,7 @@ export const App: React.FC = () => {
       <div className="zento-main-container">
         <div
           style={{
-            display: mobileActiveTab === 'catalog' || window.innerWidth >= 1024 ? 'flex' : 'none',
+            display: !isMobile || mobileActiveTab === 'catalog' ? 'flex' : 'none',
             flexDirection: 'column',
             height: '100%',
             overflow: 'hidden',
@@ -279,7 +294,7 @@ export const App: React.FC = () => {
 
         <div
           style={{
-            display: mobileActiveTab === 'timeline' || window.innerWidth >= 1024 ? 'flex' : 'none',
+            display: !isMobile || mobileActiveTab === 'timeline' ? 'flex' : 'none',
             flexDirection: 'column',
             height: '100%',
             flex: 1,
@@ -307,7 +322,7 @@ export const App: React.FC = () => {
 
         <div
           style={{
-            display: mobileActiveTab === 'dashboard' || window.innerWidth >= 1024 ? 'flex' : 'none',
+            display: !isMobile || mobileActiveTab === 'dashboard' ? 'flex' : 'none',
             flexDirection: 'column',
             height: '100%',
             overflow: 'hidden',
@@ -324,11 +339,13 @@ export const App: React.FC = () => {
         </div>
       </div>
 
-      <MobileBottomNav
-        activeTab={mobileActiveTab}
-        setActiveTab={setMobileActiveTab}
-        unsatisfiedCount={summary.unsatisfiedCount}
-      />
+      {isMobile && (
+        <MobileBottomNav
+          activeTab={mobileActiveTab}
+          setActiveTab={setMobileActiveTab}
+          unsatisfiedCount={summary.unsatisfiedCount}
+        />
+      )}
 
       <SubjectDetailDrawer
         course={selectedCourseObject}
